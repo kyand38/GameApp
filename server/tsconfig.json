@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "commonjs",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "resolveJsonModule": true, // Allows importing JSON files
+        "types": ["node", "express", "jest"], // Include types for Node, Express, and Jest
+        "experimentalDecorators": true, // Enable decorators for TypeORM or other libraries
+        "emitDecoratorMetadata": true // Enable metadata for decorators
+    },
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
+}
