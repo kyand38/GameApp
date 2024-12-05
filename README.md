@@ -1,3 +1,2 @@
-# GameApp
 
-## Adding 
+# Trivia Titans
