@@ -4,6 +4,8 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
+import Game from './pages/Game';
+import Contribute from './pages/Contribute'
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/Game" element={<Game />} />
+        <Route path="/Contribute" element={<Contribute/>} />
       </Routes>
     </Router>
   );

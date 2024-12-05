@@ -1,1 +1,1 @@
-# GameApp
+# Trivia Titans
