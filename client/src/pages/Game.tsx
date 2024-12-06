@@ -1,4 +1,6 @@
+
 import QuizCard from "../components/QuizCard";
+
 const Game = () => {
 
     return (
