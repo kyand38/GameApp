@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import QuizCard from './components/QuizCard.js'
 import App from './App.jsx'
 
 const router = createBrowserRouter([
@@ -16,6 +16,10 @@ const router = createBrowserRouter([
       }, {
         path: '/saved',
         // element: < />
+      },
+      {
+        path: 'getQuestion',
+          element : <QuizCard/>
       }
     ]
   }
