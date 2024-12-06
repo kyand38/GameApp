@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import { Card, Button, Typography, Space, Divider } from 'antd';
+import 'antd/dist/reset.css';
+
+const { Title, Text } = Typography;
 
 interface QuestionCardProps {
     question: string;
@@ -27,17 +31,10 @@ const QuizCard = () => {
 
         try {
             const response = await fetch(url, options);
-
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
             const result = await response.json();
-
-            // Debugging: Log the API response
-            console.log('API Response:', result);
-
-            // Assuming `result` matches the structure of `QuestionCardProps`
             setTrivia(result);
             setShowExplanation(false);
             setSelectedAnswer(null);
@@ -50,62 +47,97 @@ const QuizCard = () => {
     const handleAnswerClick = (answer: string) => {
         setSelectedAnswer(answer);
         setShowExplanation(true);
-
         if (answer === trivia?.correct) {
             setScore((prev) => prev + 1);
         }
     };
 
     return (
-        <div>
+        <div style={{ padding: '20px', backgroundColor: '#121212', minHeight: '100vh' }}>
             {questionsAsked >= 21 ? (
-                <div>
-                    <h2>Game Over</h2>
-                    <p>Your final score: {score}</p>
-                    {/* Save score to user profile here */}
-                </div>
+                <Card
+                    style={{
+                        maxWidth: 600,
+                        margin: '0 auto',
+                        backgroundColor: '#1e1e1e',
+                        color: 'white',
+                        textAlign: 'center',
+                    }}
+                    bordered={false}
+                >
+                    <Title level={2} style={{ color: '#ffffff' }}>
+                        Game Over
+                    </Title>
+                    <Text>Your final score: {score}</Text>
+                </Card>
             ) : (
-                <div>
+                <Card
+                    style={{
+                        maxWidth: 600,
+                        margin: '0 auto',
+                        backgroundColor: '#1e1e1e',
+                        color: 'white',
+                    }}
+                    bordered={false}
+                >
                     {trivia === null ? (
-                        <p>Click the button to start!</p>
+                        <Text style={{ color: '#ffffff' }}>Click the button to start!</Text>
                     ) : (
-                        <div>
-                            <h2>Category: {trivia.category}</h2>
-                            <h4>Question: {trivia.question}</h4>
-                            <div>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <Title level={4} style={{ color: '#ffffff', textAlign: 'center' }}>
+                                Category: {trivia.category}
+                            </Title>
+                            <Divider />
+                            <Text style={{ color: '#ffffff', textAlign: 'center', marginBottom: '20px' }}>
+                                {trivia.question}
+                            </Text>
+                            <Space direction="vertical" style={{ width: '100%', maxWidth: '400px' }}>
                                 {trivia.answers.map((answer, index) => (
-                                    <button
+                                    <Button
                                         key={index}
                                         onClick={() => handleAnswerClick(answer)}
                                         disabled={showExplanation}
+                                        style={{
+                                            backgroundColor: '#333333',
+                                            color: '#ffffff',
+                                            border: '1px solid #444444',
+                                            width: '100%',
+                                            textAlign: 'left',
+                                        }}
                                     >
                                         {answer}
-                                    </button>
+                                    </Button>
                                 ))}
-                            </div>
+                            </Space>
                             {showExplanation && (
-                                <div>
-                                    <p>
+                                <div style={{ marginTop: 20, textAlign: 'center' }}>
+                                    <Text
+                                        style={{
+                                            color: selectedAnswer === trivia.correct ? '#00ff00' : '#ff4d4f',
+                                        }}
+                                    >
                                         {selectedAnswer === trivia.correct
                                             ? 'Correct!'
                                             : `Wrong! The correct answer is: ${trivia.correct}`}
-                                    </p>
-                                    <p>Explanation: {trivia.explanation}</p>
+                                    </Text>
+                                    <Divider />
+                                    <Text style={{ color: '#ffffff' }}>Explanation: {trivia.explanation}</Text>
                                 </div>
                             )}
                         </div>
                     )}
-                    <button
-                        onClick={() => {
-                            console.log("Button clicked");
-                            getRandomQuestion();
-                        }}
+                    <Divider />
+                    <Button
+                        onClick={getRandomQuestion}
+                        style={{ backgroundColor: '#444444', color: '#ffffff', border: '1px solid #555555' }}
                     >
                         Get Random Question
-                    </button>
-                    <p>Score: {score}</p>
-                    <p>Questions Asked: {questionsAsked}/21</p>
-                </div>
+                    </Button>
+                    <Divider />
+                    <Text style={{ color: '#ffffff' }}>Score: {score}</Text>
+                    <br />
+                    <Text style={{ color: '#ffffff' }}>Questions Asked: {questionsAsked}/21</Text>
+                </Card>
             )}
         </div>
     );
