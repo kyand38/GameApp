@@ -6,7 +6,7 @@ const typeDefs = gql`
   _id: ID!
   username: String
   email: String
-  highScore: [Number]
+  highScore: [Int]
   }
 
   type Auth {

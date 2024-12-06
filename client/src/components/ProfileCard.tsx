@@ -1,9 +1,10 @@
 
 import { useState} from "react";
-import { UserDetails } from "../interfaces/interface";
+import { UserDetails } from "../interfaces/interface.js";
 
 const getUserDetails = () => {
-    const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
+    const [userDetails, _setUserDetails] = useState<UserDetails | null>(null);
+    
     return userDetails;
 }
 
