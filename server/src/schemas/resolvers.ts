@@ -1,31 +1,72 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import User, { UserDocument } from '../models/User.js'
+import { GraphQLError } from 'graphql'
+import { signToken, AuthenticationError } from '../services/auth.js';
 
-const resolvers = {
-  Query: {
-    me: async (_, __, { user }) => {
-      if (!user) throw new Error('Authentication required');
-      return await User.findById(user._id);
-    },
-  },
-  Mutation: {
-    login: async (_, { email, password }) => {
-      const user = await User.findOne({ email });
-      if (!user) throw new Error('User not found');
+interface UserArgs {
+  userId: string;
+}
 
-      const validPassword = await bcrypt.compare(password, user.password);
-      if (!validPassword) throw new Error('Invalid password');
+interface CreateUserArgs {
+  username: string;
+  email: string;
+  password: string;
+}
 
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      return { ...user._doc, token };
+interface loginArgs {
+  email: string;
+  password: string;
+}
+
+  const resolvers = {
+    Query: {
+        me: async (_parent: unknown, _args: UserArgs, context: any) => {
+            console.log('Here is context', context.user)
+            
+            return await User.findOne({ _id: context.user._id }).populate('savedBooks');
+        },
     },
-    signup: async (_, { username, email, password }) => {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await User.create({ username, email, password: hashedPassword });
-      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-      return { ...user._doc, token };
-    },
+    Mutation: {
+      addUser: async (_parent: any, { username, email, password }: CreateUserArgs): Promise<{ token: string; user: UserDocument }> => {
+          if (!/^\S+@\S+\.\S+$/.test(email)) {
+              throw new GraphQLError('Invalid email format.');
+          }
+          if (password.length < 8) {
+              throw new GraphQLError('Password must be at least 8 characters.');
+          }
+          if (!username || !email || !password) {
+              throw new GraphQLError('Username, email, and password required.');
+          }
+
+          const userExists = await User.findOne({ $or: [{ email }, { username }] });
+          if (userExists) {
+              throw new GraphQLError('Username or Email already exists.');
+
+          }
+
+          const newUser = await User.create({ username, email, password });
+          const token = signToken(newUser.username, newUser.email, newUser._id);
+          return { token, user: newUser, };
+      },
+
+      login: async (_parent: any, { email, password }: loginArgs): Promise<{ token: string; user: UserDocument }> => {
+          const user = await User.findOne({ email: email.toLowerCase() });
+
+          if (!/^\S+@\S+\.\S+$/.test(email)) {
+              throw new GraphQLError('Invalid email format.');
+          }
+          if (password.length < 8) {
+              throw new GraphQLError('Password must be at least 8 characters.');
+          }
+          if (!user) {
+              throw new AuthenticationError('User not found.');
+          }
+          const passCheck = await user.isCorrectPassword(password);
+          if (!passCheck) {
+              throw new AuthenticationError('Invalid password.')
+          }
+          const token = signToken(user.username, user.email, user._id);
+          return { token, user };
+      },
   },
 };
 
