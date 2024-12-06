@@ -1,11 +1,6 @@
 
 import { useState} from "react";
-
-interface UserDetails {
-    userName: string | null;
-    email: string | null;
-    password: string | null;
-}
+import { UserDetails } from "../interfaces/interface";
 
 const getUserDetails = () => {
     const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
@@ -17,13 +12,13 @@ const ProfileCard = () => {
 
     return (
         <>
-        <p>Username: {user.userName}</p> 
+        {user ? <p>Username: {user.userName} </p>: <p>Username Not Found</p> } 
         <button>Edit</button>
         <br/>
-        <p>Email: {user.email}</p>
+        {user ? <p>Email: {user.email} </p>: <p>Email Not Found</p> } 
         <button>Edit</button>
         <br/>
-        <p>Password: {user.password}</p>
+        {user ? <p>Password: {user.password} </p>: <p>Password Not Found</p> }
         <button>Edit</button>
         </>
     );
