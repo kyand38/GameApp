@@ -23,7 +23,7 @@ interface loginArgs {
             console.log('Here is context', context.user)
             
             return await User.findOne({ _id: context.user._id }).populate('savedBooks');
-        }
+        },
     },
     Mutation: {
       addUser: async (_parent: any, { username, email, password }: CreateUserArgs): Promise<{ token: string; user: UserDocument }> => {
