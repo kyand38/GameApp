@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+// import { Box, Button, VStack, Text, Heading, Spinner } from '@chakra-ui/react';
 
 interface QuestionCardProps {
     question: string;
@@ -39,14 +39,24 @@ try {
 return  (
         <>
         <div>
+            {/* <Box> */}
                 {trivia === null?(
                     <p>Click da button!!!</p>
                 ): (
+                    <div>
                     <h2>Category: {trivia.category}</h2>
-                    <p></p>
-
+                    <h4>Question: {trivia.question}</h4>
+                    <p>
+                    {trivia.answers.map((answer, index) => (
+              <button key={index}>
+                {answer}
+              </button>
+            ))}
+                    </p>
+                   </div>
                 )
             }
+            {/* </Box> */}
         </div>
 <button onClick={getRandomQuestion}>
     Get Random Question
