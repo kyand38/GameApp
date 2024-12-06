@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Card, Button, Typography, Space, Divider } from 'antd';
 import 'antd/dist/reset.css';
-
+// import gsap from 'gsap'
 const { Title, Text } = Typography;
 
 interface QuestionCardProps {
@@ -53,7 +53,11 @@ const QuizCard = () => {
     };
 
     return (
-        <div style={{ padding: '20px', backgroundColor: '#121212', minHeight: '100vh' }}>
+        <div style={{
+            padding: '20px',
+            backgroundColor: '#121212',
+            minHeight: '100vh',
+        }}>
             {questionsAsked >= 21 ? (
                 <Card
                     style={{
@@ -63,7 +67,7 @@ const QuizCard = () => {
                         color: 'white',
                         textAlign: 'center',
                     }}
-                    bordered={false}
+                // bordered={false} 'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)'
                 >
                     <Title level={2} style={{ color: '#ffffff' }}>
                         Game Over
@@ -77,8 +81,11 @@ const QuizCard = () => {
                         margin: '0 auto',
                         backgroundColor: '#1e1e1e',
                         color: 'white',
+                        borderStyle: 'solid',
+                        borderWidth: '2px',
+                        borderColor: 'rgb(98,83,225)'
                     }}
-                    bordered={false}
+                    //bordered={false}
                 >
                     {trivia === null ? (
                         <Text style={{ color: '#ffffff' }}>Click the button to start!</Text>
@@ -100,7 +107,7 @@ const QuizCard = () => {
                                         style={{
                                             backgroundColor: '#333333',
                                             color: '#ffffff',
-                                            border: '1px solid #444444',
+                                            border: '1px solid rgb(4,190,254)',
                                             width: '100%',
                                             textAlign: 'left',
                                         }}
@@ -127,16 +134,32 @@ const QuizCard = () => {
                         </div>
                     )}
                     <Divider />
-                    <Button
-                        onClick={getRandomQuestion}
-                        style={{ backgroundColor: '#444444', color: '#ffffff', border: '1px solid #555555' }}
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '100%', // Optional, to ensure vertical centering
+                            gap: '1rem', // Adds spacing between elements
+                        }}
                     >
-                        Get Random Question
-                    </Button>
-                    <Divider />
-                    <Text style={{ color: '#ffffff' }}>Score: {score}</Text>
-                    <br />
-                    <Text style={{ color: '#ffffff' }}>Questions Asked: {questionsAsked}/21</Text>
+                        <Button
+                            onClick={getRandomQuestion}
+                            style={{
+                                background: 'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 100%)',
+                                color: '#ffffff',
+                                border: '1px solid #555555',
+                            }}
+                        >
+                            Get Random Question
+                        </Button>
+                        <Divider style={{ backgroundColor: 'rgb(255,110,199)', width: '80%' }} />
+                        <Text style={{ color: '#ffffff', fontSize: '16px' }}>Score: {score}</Text>
+                        <Text style={{ color: '#ffffff', fontSize: '16px' }}>
+                            Questions Asked: {questionsAsked}/21
+                        </Text>
+                    </div>
                 </Card>
             )}
         </div>
