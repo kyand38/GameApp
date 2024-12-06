@@ -1,7 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import QuizCard from './components/QuizCard.js'
 import App from './App.jsx'
 import Signin from './pages/SignIn.js'
 import Home from './pages/Home.js'
@@ -36,6 +35,7 @@ const router = createBrowserRouter([
         path: '/contribute',
         element: < Contribute/>
       }
+      
     ]
   }
 ])
