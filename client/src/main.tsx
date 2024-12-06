@@ -7,6 +7,7 @@ import Home from './pages/Home.js'
 import Game from './pages/Game.js'
 import Profile from './pages/Profile.js'
 import Contribute from './pages/Contribute.js'
+import 'semantic-ui-css/semantic.min.css'
 
 
 const router = createBrowserRouter([
