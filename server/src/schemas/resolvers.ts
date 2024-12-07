@@ -27,7 +27,8 @@ interface loginArgs {
     },
     Mutation: {
       addUser: async (_parent: any, { username, email, password }: CreateUserArgs): Promise<{ token: string; user: UserDocument }> => {
-          if (!/^\S+@\S+\.\S+$/.test(email)) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email)) {
               throw new GraphQLError('Invalid email format.');
           }
           if (password.length < 8) {
@@ -49,7 +50,7 @@ interface loginArgs {
       },
 
       login: async (_parent: any, { email, password }: loginArgs): Promise<{ token: string; user: UserDocument }> => {
-          const user = await User.findOne({ email: email.toLowerCase() });
+          const user = await User.findOne({ email: email.toLowerCase() });//puede dar error con la diferencia entre mayusculas y minustculas
 
           if (!/^\S+@\S+\.\S+$/.test(email)) {
               throw new GraphQLError('Invalid email format.');
