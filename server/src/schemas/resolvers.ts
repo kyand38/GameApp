@@ -22,7 +22,7 @@ interface loginArgs {
         me: async (_parent: unknown, _args: UserArgs, context: any) => {
             console.log('Here is context', context.user)
             
-            return await User.findOne({ _id: context.user._id }).populate('savedBooks');
+            return await User.findOne({ _id: context.user._id });
         },
     },
     Mutation: {

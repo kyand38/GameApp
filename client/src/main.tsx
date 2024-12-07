@@ -8,7 +8,10 @@ import Game from './pages/Game.js'
 import Profile from './pages/Profile.js'
 import Contribute from './pages/Contribute.js'
 import 'semantic-ui-css/semantic.min.css'
-import CategorySelector from './components/CategorySelector.js'
+// import CategorySelector from './components/CategorySelector.js'
+import Game1 from './pages/Game1.js'
+import Game2 from './pages/Game2.js'
+// import Game3 from './pages/Game3.js'
 
 
 const router = createBrowserRouter([
@@ -30,6 +33,18 @@ const router = createBrowserRouter([
         element : < Game/>
       },
       {
+        path: '/game1',
+        element : < Game1/>
+      },
+      {
+        path: '/game2',
+        element : < Game2/>
+      },
+      // {
+      //   path: '/game3',
+      //   element : < Game3/>
+      // },
+      {
         path: '/profile',
         element: < Profile/>
       },
@@ -41,10 +56,10 @@ const router = createBrowserRouter([
         path: '/streakModeRandom',
         element: < Contribute/>
       },
-      {
-        path: '/categorySelector',
-        element: <CategorySelector/>
-      }
+      // {
+      //   path: '/categorySelector',
+      //   element: <CategorySelector/>
+      // }
       
     ]
   }
