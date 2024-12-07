@@ -114,8 +114,10 @@ const useStyle = createStyles(({ css }) => ({
 }));
 
 const Navbar = () => {
+
    
     const { styles } = useStyle();
+
 
     return (
         <div className={styles.container}>
@@ -140,11 +142,15 @@ const Navbar = () => {
                         Contribute
                     </Link>
                 </li>
+
                 
             </ul>
 
            
            
+
+            </ul>
+
         </div>
     );
 };

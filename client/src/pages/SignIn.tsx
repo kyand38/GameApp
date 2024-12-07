@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Form, Input, Button, message, ConfigProvider } from 'antd';
 import { createStyles } from 'antd-style';
@@ -121,6 +122,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
     `,
 }));
 
+
 const SignIn = () => {
     const [showModal, setShowModal] = useState(false);
     const { styles } = useStyle();
@@ -142,7 +144,10 @@ const SignIn = () => {
         message.error('Please check your credentials');
     };
 
+    const [showModal, setShowModal] = useState(false);
+
     return (
+
         <div className={styles.container}>
             <div className={styles.formWrapper}>
                 <h2 className={styles.formTitle}>Sign In</h2>
@@ -217,5 +222,6 @@ const SignIn = () => {
         </div>
     );
 };
+
 
 export default SignIn;
