@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import SignUpForm from './Signup';
 import Auth from '../utils/auth';
 import { createStyles } from 'antd-style';
 
-const useStyle = createStyles(({ prefixCls, css }) => ({
+const useStyle = createStyles(({ css }) => ({
     container: css`
         position: relative;
         display: flex;
@@ -116,7 +114,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
 }));
 
 const Navbar = () => {
-    const [showModal, setShowModal] = useState(false);
+   
     const { styles } = useStyle();
 
     return (
@@ -142,31 +140,11 @@ const Navbar = () => {
                         Contribute
                     </Link>
                 </li>
-                <li className={styles.navItem}>
-                    <button
-                        className={styles.signupButton}
-                        onClick={() => setShowModal(true)}
-                    >
-                        Sign Up
-                    </button>
-                </li>
+                
             </ul>
 
-            {/* Modal */}
-            {showModal && (
-                <div className={styles.modalOverlay}>
-                    <div className={styles.modalContent}>
-                        <button
-                            className={styles.closeButton}
-                            onClick={() => setShowModal(false)}
-                        >
-                            &times;
-                        </button>
-                        <h2>Sign Up</h2>
-                        <SignUpForm handleModalClose={() => setShowModal(false)} />
-                    </div>
-                </div>
-            )}
+           
+           
         </div>
     );
 };
