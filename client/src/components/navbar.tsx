@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SignUpForm from './Signup';
 import Login from './Login';
+import { useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import gsap from 'gsap';
 import Auth from '../utils/auth';
 import { createStyles } from 'antd-style';
 
@@ -16,7 +19,6 @@ const useStyle = createStyles(({ css }) => ({
         color: white;
         text-align: center;
         padding: 0 20px;
-        animation: slideIn 0.5s ease-out; /* Slide in the navbar */
     `,
     nav: css`
         list-style: none;
@@ -24,15 +26,14 @@ const useStyle = createStyles(({ css }) => ({
         gap: 20px;
         margin: 0;
         padding: 0;
-        opacity: 0;
-        animation: fadeIn 1s forwards; /* Fade in effect */
+        opacity: 0; /* Start with opacity 0 for animation */
     `,
     navItem: css`
         position: relative;
         transition: transform 0.3s ease, color 0.3s ease;
         &:hover {
-            transform: scale(1.1); /* Slightly scale up when hovered */
-            color: #04befe; /* Change color on hover */
+            animation: spin 0.5s ease-out;
+            color: #04befe;
         }
     `,
     navLink: css`
@@ -59,68 +60,30 @@ const useStyle = createStyles(({ css }) => ({
             opacity: 1;
         }
     `,
-    signupButton: css`
-        background-color: #6253e1;
-        color: white;
-        padding: 10px 20px;
-        font-size: 1.2rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
-        &:hover {
-            background-color: #04befe;
-        }
-    `,
-    modalOverlay: css`
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    `,
-    modalContent: css`
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        width: 400px;
-        max-width: 100%;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        z-index: 10000;
-    `,
-    closeButton: css`
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        color: #333;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        cursor: pointer;
-    `,
-    
-    // Animations
-    '@keyframes slideIn': {
-        '0%': { transform: 'translateY(-100%)' },
-        '100%': { transform: 'translateY(0)' },
-    },
-    '@keyframes fadeIn': {
-        '0%': { opacity: 0 },
-        '100%': { opacity: 1 },
-    }
 }));
+
+// Add keyframes in a <style> tag
+const SpinKeyframes = () => (
+    <style>
+        {`
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        `}
+    </style>
+);
 
 const Navbar = () => {
     const [showModal, setShowModal] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
 
     const { styles } = useStyle();
+    const navigate = useNavigate();
 
     return (
         <div className={styles.container}>
@@ -195,7 +158,5 @@ const Navbar = () => {
                 </div>
             )}
         </div>
-    );
-};
 
 export default Navbar;
