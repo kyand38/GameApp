@@ -10,7 +10,7 @@ const SignIn = () => {
 
     return (
         <>
-        <h1>Sign In or Sign Up</h1>
+        <h1>Login or Sign Up</h1>
         <Card>
         <Login />
         </Card>
