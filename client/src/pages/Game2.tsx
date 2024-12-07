@@ -1,5 +1,5 @@
 import Navbar from "../components/navbar";
-import QuizCard from "../components/21QuestionsCardRandom";
+import CategoryQuizCard from "../components/ChooseCategory21Questions";
 const Game = () => {
 
     return (
@@ -7,7 +7,7 @@ const Game = () => {
         <h1>Triva Titans</h1>
         <Navbar/>
         <div>
-        <QuizCard/>
+            <CategoryQuizCard/>
         </div>
         </>
     )

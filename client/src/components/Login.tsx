@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import { LoginMutations } from '../apollo/mutations'; // Import ADD_USER mutation
 
-const LOGIN_USER = gql`
-  mutation Login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      username
-    }
-  }
-`;
 
-const Login: React.FC = () => {
+const Login = ({ handleModalClose }: { handleModalClose: () => void }) => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [login] = useMutation(LOGIN_USER);
+  const [LoginMutation] = useMutation(LoginMutations);/*CONSULTAR*/
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { data } = await login({ variables: { email, password } });
+      const { data } = await LoginMutation({ variables: { email, password } });
       if (data?.login?.token) {
         localStorage.setItem('id_token', data.login.token);
-        navigate('/profile');
+        handleModalClose()
+        navigate('/home');
       }
     } catch (error) {
       console.error(error);

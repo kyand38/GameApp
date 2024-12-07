@@ -8,7 +8,7 @@ export interface UserDocument extends Document {
   email: string;
   password: string;
   isCorrectPassword(password: string): Promise<boolean>;
-  bookCount: number;
+  highScore?: number[]; // Propiedad opcional
 }
 
 const userSchema = new Schema<UserDocument>(
@@ -17,6 +17,7 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     email: {
       type: String,
@@ -28,7 +29,13 @@ const userSchema = new Schema<UserDocument>(
       type: String,
       required: true,
     },
+    highScore: {
+      type: [Number],
+      default: [],
+    },
   },
+
+
   // set this to use virtual below
   {
     toJSON: {

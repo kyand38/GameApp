@@ -15,10 +15,11 @@ export const authenticateToken = ({ req }: any) => {
   }
 
   try {
-    const { data }: any = jwt.verify(token, process.env.JWT_SECRET_KEY || '', { maxAge: '2hr' });
+    const  data : any = jwt.verify(token, process.env.JWT_SECRET_KEY || '', { maxAge: '2hr' });
     req.user = data;
+    console.log('data', data);
   } catch (err) {
-    console.log('Invalid token');
+    console.log('*====>Invalid token');
   }
 
   return req;

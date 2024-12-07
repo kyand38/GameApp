@@ -5,6 +5,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import type { User } from '../models/User';
 
+
 const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
   const [userFormData, setUserFormData] = useState<User>({
     username: '',
@@ -12,7 +13,7 @@ const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
     password: '',
     confirmPassword: '',
   });
-  //const [validated] = useState(false);
+
   const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
@@ -43,23 +44,23 @@ const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
       // Perform addUser mutation using Apollo Client
       const { data } = await addUserMutation({
         variables: {
-          input: {
+         
             username: userFormData.username,
             email: userFormData.email,
             password: userFormData.password,
-          },
+          
         },
       });
 
       // Assuming `data.addUser.token` returns a token
       const { token } = data.addUser;
       Auth.login(token); // Save the token to local storage or cookies
-
-      // Close the modal (if applicable)
+        // Close the modal (if applicable)
       handleModalClose();
     } catch (err) {
       console.error(err);
       setShowAlert(true); // Display error alert
+      
     }
 
     // Reset form data

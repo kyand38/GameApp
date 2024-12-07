@@ -8,7 +8,12 @@ const typeDefs = gql`
   email: String
   highScore: [Int]
   }
-
+ # Entrada para agregar un Usuario
+  input UserInput {
+    username: String!
+    email: String!
+    password: String!
+  }
   type Auth {
   token: ID!
   user: User
@@ -20,7 +25,8 @@ const typeDefs = gql`
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
+    # Crea un nuevo usuario
+    addUser(  username: String!, email: String!,  password: String!): Auth
   }
 
 

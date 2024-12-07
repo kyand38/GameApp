@@ -12,3 +12,15 @@ mutation Signup($username: String!, $email: String!, $password: String!) {
   }
 }
 `
+
+export const  LoginMutations = gql`
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+    user {
+      _id
+      username
+    }
+  }
+}`
+
