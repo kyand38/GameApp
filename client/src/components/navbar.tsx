@@ -149,8 +149,6 @@ const Navbar = () => {
            
            
 
-            </ul>
-
         </div>
     );
 };
