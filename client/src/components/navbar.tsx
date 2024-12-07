@@ -117,12 +117,10 @@ const useStyle = createStyles(({ css }) => ({
 }));
 
 const Navbar = () => {
-    const [showModal, setShowModal] = useState(false); 
-    const [showLoginModal, setshowLoginModal] = useState(false); 
+    const [showModal, setShowModal] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
 
-   
     const { styles } = useStyle();
-
 
     return (
         <div className={styles.container}>
@@ -147,43 +145,46 @@ const Navbar = () => {
                         Contribute
                     </Link>
                 </li>
-                <li className="nav-item">
+                <li className={styles.navItem}>
                     <button
-                        className="signup-button"
+                        className={styles.signupButton}
                         onClick={() => setShowModal(true)}
                     >
                         Sign Up
                     </button>
                 </li>
-                <li className="nav-item">
+                <li className={styles.navItem}>
                     <button
-                        className="signup-button"
-                        onClick={() => setshowLoginModal(true)}
+                        className={styles.signupButton}
+                        onClick={() => setShowLoginModal(true)}
                     >
-                        login
+                        Login
                     </button>
                 </li>
             </ul>
+
+            {/* Login Modal */}
             {showLoginModal && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
                         <button
-                            className="close-button"
-                            onClick={() => setshowLoginModal(false)}
+                            className={styles.closeButton}
+                            onClick={() => setShowLoginModal(false)}
                         >
                             &times;
                         </button>
                         <h2>Login</h2>
-                        <Login handleModalClose={() => setshowLoginModal(false)} />
+                        <Login handleModalClose={() => setShowLoginModal(false)} />
                     </div>
                 </div>
             )}
-            
+
+            {/* Sign-Up Modal */}
             {showModal && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
                         <button
-                            className="close-button"
+                            className={styles.closeButton}
                             onClick={() => setShowModal(false)}
                         >
                             &times;
@@ -193,7 +194,6 @@ const Navbar = () => {
                     </div>
                 </div>
             )}
-
         </div>
     );
 };
