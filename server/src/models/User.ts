@@ -8,7 +8,7 @@ export interface UserDocument extends Document {
   email: string;
   password: string;
   isCorrectPassword(password: string): Promise<boolean>;
-  bookCount: number;
+  
 }
 
 const userSchema = new Schema<UserDocument>(

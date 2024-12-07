@@ -1,6 +1,6 @@
 import Navbar from "../components/navbar";
-import QuizCard from "../components/QuizCard";
-
+// import QuizCard from "../components/21QuestionsCardRandom";
+import StreakModeCard from "../components/StreakModeRandomCard";
 const Game = () => {
 
     return (
@@ -8,7 +8,8 @@ const Game = () => {
         <h1>Triva Titans</h1>
         <Navbar/>
         <div>
-        <QuizCard/>
+            <StreakModeCard/>
+        {/* <QuizCard/> */}
         </div>
         </>
     )
