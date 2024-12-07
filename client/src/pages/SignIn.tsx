@@ -5,7 +5,8 @@ import { createStyles } from 'antd-style';
 import { gsap } from 'gsap';
 import { AntDesignOutlined } from '@ant-design/icons';
 import SignUpForm from '../components/Signup';
-
+import Login from './../components/Login';
+import { useNavigate } from 'react-router-dom';
 // Define the type for the form values
 interface SignInFormValues {
     username: string;
@@ -124,8 +125,9 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
 
 
 const SignIn = () => {
-    const [showModal, setShowModal] = useState(false);
+
     const { styles } = useStyle();
+    const navigate = useNavigate();
 
     useEffect(() => {
         // GSAP animation for form appearance
@@ -145,6 +147,7 @@ const SignIn = () => {
     };
 
     const [showModal, setShowModal] = useState(false);
+    const [showLoginModal, setshowLoginModal] = useState(false); 
 
     return (
 
@@ -182,14 +185,19 @@ const SignIn = () => {
 
                     <Form.Item>
                         <ConfigProvider button={{ className: styles.linearGradientButton }}>
-                            <Button
-                                className={`${styles.button} button`}
-                                type="primary"
-                                size="large"
-                                icon={<AntDesignOutlined />}
+                        <Button
+                            className={`${styles.button} button`}
+                            type="primary"
+                            size="large"
+                            icon={<AntDesignOutlined />}
+                            onClick={() => setshowLoginModal(false)}
                             >
-                                Sign In
+                            Sign In
                             </Button>
+                            <Login
+                            handleModalClose={() => setshowLoginModal(false)}
+                            navigateToHome={() => navigate('/home')}
+                            />
                         </ConfigProvider>
                     </Form.Item>
                     <Form.Item>
