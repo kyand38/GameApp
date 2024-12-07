@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SignUpForm from './Signup';
-import Login from './Login';
+//import Login from './Login';
 import Auth from '../utils/auth';
 import { createStyles } from 'antd-style';
 
@@ -174,7 +174,7 @@ const Navbar = () => {
                             &times;
                         </button>
                         <h2>Login</h2>
-                        <Login handleModalClose={() => setshowLoginModal(false)} />
+                    
                     </div>
                 </div>
             )}
