@@ -144,8 +144,6 @@ const SignIn = () => {
         message.error('Please check your credentials');
     };
 
-    const [showModal, setShowModal] = useState(false);
-
     return (
 
         <div className={styles.container}>

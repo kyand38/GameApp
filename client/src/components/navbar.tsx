@@ -164,7 +164,6 @@ const Navbar = () => {
                     </button>
                 </li>
             </ul>
-          
             {showLoginModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -194,6 +193,7 @@ const Navbar = () => {
                     </div>
                 </div>
             )}
+
         </div>
     );
 };
