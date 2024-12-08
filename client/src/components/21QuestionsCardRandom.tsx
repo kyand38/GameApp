@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Divider, Card, Typography } from 'antd';
 import Confetti from 'react-confetti';
-import '../assets/styles/flames.css'; 
+import '../assets/styles/flames.css';
 import Fireworks from '../components/Fireworks';
 import SparkleEffect from '../components/SparkleComponent';
 
@@ -67,7 +67,7 @@ const QuizCard = () => {
             setTimeout(() => setShowConfetti(false), 3000);
         } else {
             setShowRedOverlay(true);
-            setTimeout(() => setShowRedOverlay(false), 1000); 
+            setTimeout(() => setShowRedOverlay(false), 1000);
         }
 
         setQuestionsAsked((prev) => prev + 1);
@@ -87,21 +87,21 @@ const QuizCard = () => {
         >
             <SparkleEffect />
             {showRedOverlay && (
-    <div
-        style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(255, 0, 0, 0.5)',
-            zIndex: 1000,
-            pointerEvents: 'none',
-            animation: 'flash 0.5s ease-in-out',
-        }}
-    ></div>
-    
-)}
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                        zIndex: 1000,
+                        pointerEvents: 'none',
+                        animation: 'flash 0.5s ease-in-out',
+                    }}
+                ></div>
+
+            )}
             {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
             {showFlames && <div className="flames"></div>}
 
@@ -219,8 +219,11 @@ const QuizCard = () => {
                                         <div style={{ marginTop: '15px' }}>
                                             <Text style={{ color: '#ffffff' }}>
                                                 {selectedAnswer === trivia.correct
-                                                    ? 'Correct!'
-                                                    : `Wrong! The correct answer is: ${trivia.correct}`}
+                                                    ? 'Correct! '
+                                                    : `Wrong! The correct answer was: `}
+                                                <span style={{ color: 'lightgreen', fontWeight: 'bold' }}>
+                                                    {trivia.correct}
+                                                </span>
                                             </Text>
                                             <br />
                                             <Text style={{ color: '#ffffff' }}>
