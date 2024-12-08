@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Divider, Card, Typography } from 'antd';
 import Confetti from 'react-confetti';
-import '../assets/styles/flames.css'; // Assuming flames.css is in the same folder as QuizCard
+import '../assets/styles/flames.css'; 
 import Fireworks from '../components/Fireworks';
 
 const { Text, Title } = Typography;
@@ -25,6 +25,7 @@ const QuizCard = () => {
     const [showQuestionNumber, setShowQuestionNumber] = useState(false);
     const [questionLoading, setQuestionLoading] = useState(false);
     const [animateHeading, setAnimateHeading] = useState(false);
+    const [showRedOverlay, setShowRedOverlay] = useState(false);
 
     const getRandomQuestion = async () => {
         setQuestionLoading(true);
@@ -64,8 +65,8 @@ const QuizCard = () => {
             setShowConfetti(true);
             setTimeout(() => setShowConfetti(false), 3000);
         } else {
-            setShowFlames(true);
-            setTimeout(() => setShowFlames(false), 3000);
+            setShowRedOverlay(true);
+            setTimeout(() => setShowRedOverlay(false), 1000); 
         }
 
         setQuestionsAsked((prev) => prev + 1);
@@ -83,6 +84,21 @@ const QuizCard = () => {
                 position: 'relative',
             }}
         >
+            {showRedOverlay && (
+    <div
+        style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(255, 0, 0, 0.5)',
+            zIndex: 1000,
+            pointerEvents: 'none',
+            animation: 'flash 0.5s ease-in-out',
+        }}
+    ></div>
+)}
             {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
             {showFlames && <div className="flames"></div>}
 
