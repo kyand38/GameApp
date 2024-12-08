@@ -9,3 +9,41 @@
 .shake {
     animation: shake 0.5s ease-in-out;
 }
+
+@keyframes rotateYAnimation {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+.rotateAnimation {
+    animation: rotateYAnimation 4s ease-in-out;
+    perspective: 1000px;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    20% {
+        transform: translateY(-10px);
+    }
+    40% {
+        transform: translateY(0);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+    80% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
