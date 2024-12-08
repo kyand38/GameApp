@@ -47,3 +47,25 @@
         transform: translateY(0);
     }
 }
+
+.sparkle {
+    position: fixed;
+    width: 5px;
+    height: 5px;
+    background-color: gold;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    animation: sparkle-animation 0.9s ease-out forwards;
+}
+
+@keyframes sparkle-animation {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(20px, -20px) scale(0);
+    }
+}

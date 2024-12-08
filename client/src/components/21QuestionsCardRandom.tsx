@@ -3,6 +3,7 @@ import { Button, Divider, Card, Typography } from 'antd';
 import Confetti from 'react-confetti';
 import '../assets/styles/flames.css'; 
 import Fireworks from '../components/Fireworks';
+import SparkleEffect from '../components/SparkleComponent';
 
 const { Text, Title } = Typography;
 
@@ -84,6 +85,7 @@ const QuizCard = () => {
                 position: 'relative',
             }}
         >
+            <SparkleEffect />
             {showRedOverlay && (
     <div
         style={{
@@ -98,6 +100,7 @@ const QuizCard = () => {
             animation: 'flash 0.5s ease-in-out',
         }}
     ></div>
+    
 )}
             {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
             {showFlames && <div className="flames"></div>}

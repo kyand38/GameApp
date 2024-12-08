@@ -7,6 +7,8 @@ import { gsap } from 'gsap';
 import Navbar from '../components/navbar';
 import Logo from '../images/trivia-titans-logo.png'
 import Fireworks from '../components/Fireworks';
+import SparkleEffect from '../components/SparkleComponent';
+
 
 const useStyle = createStyles(({ prefixCls, css }) => ({
     linearGradientButton: css`
@@ -184,10 +186,10 @@ const Home = () => {
 
     return (
         <>
+        <SparkleEffect />  
             <Navbar />
             <div className={styles.container}>
                 <Fireworks />
-
                 <div>
                     <img src={Logo} alt="Trivia Titan" className={`${styles.image} image`} />
                     <h1 className={`${styles.heading} heading`}>Trivia Titan: Are You Ready to Party?</h1>
