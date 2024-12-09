@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Button, Divider, Card, Typography } from 'antd';
+import { Button, Divider, Card, Typography, Modal } from 'antd';
+import { useMutation } from '@apollo/client';
+import { ADD_LEADERBOARD_ENTRY } from '../apollo/mutations';
 import Confetti from 'react-confetti';
 import '../assets/styles/flames.css';
-import Fireworks from '../components/Fireworks';
+// import Fireworks from '../components/Fireworks';
 import SparkleEffect from '../components/SparkleComponent';
 
 const { Text, Title } = Typography;
@@ -22,39 +24,32 @@ const QuizCard = () => {
     const [showExplanation, setShowExplanation] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
-    //const [showFlames, setShowFlames] = useState(false);
-    const [showQuestionNumber, setShowQuestionNumber] = useState(false);
     const [questionLoading, setQuestionLoading] = useState(false);
-    const [animateHeading, setAnimateHeading] = useState(false);
     const [showRedOverlay, setShowRedOverlay] = useState(false);
+    const [isGameOverModalVisible, setIsGameOverModalVisible] = useState(false);
+
+    const [addLeaderboardEntry] = useMutation(ADD_LEADERBOARD_ENTRY);
 
     const getRandomQuestion = async () => {
         setQuestionLoading(true);
-        setShowQuestionNumber(true);
-        setAnimateHeading(true);
 
-        setTimeout(async () => {
-            try {
-                const response = await fetch('/api/quiz/random-question', { method: 'GET' });
+        try {
+            const response = await fetch('/api/quiz/random-question', { method: 'GET' });
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const result = await response.json();
-                setTrivia(result);
-                setShowExplanation(false);
-                setSelectedAnswer(null);
-                setShowConfetti(false);
-               // setShowFlames(false);
-            } catch (error) {
-                console.error('Error fetching question:', error);
-            } finally {
-                setShowQuestionNumber(false);
-                setQuestionLoading(false);
-                setAnimateHeading(false);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        }, 4000);
+
+            const result = await response.json();
+            setTrivia(result);
+            setShowExplanation(false);
+            setSelectedAnswer(null);
+            setShowConfetti(false);
+        } catch (error) {
+            console.error('Error fetching question:', error);
+        } finally {
+            setQuestionLoading(false);
+        }
     };
 
     const handleAnswerClick = (answer: string) => {
@@ -71,6 +66,27 @@ const QuizCard = () => {
         }
 
         setQuestionsAsked((prev) => prev + 1);
+
+        if (questionsAsked + 1 >= 21) {
+            setIsGameOverModalVisible(true);
+        }
+    };
+
+    const handleSaveScore = async () => {
+        try {
+            await addLeaderboardEntry({
+                variables: {
+                    username: "Player", // Replace with actual username from auth context
+                    score,
+                    category: trivia?.category || 'General',
+                },
+            });
+            console.log('Score saved successfully!');
+        } catch (error) {
+            console.error('Error saving score:', error);
+        } finally {
+            setIsGameOverModalVisible(false);
+        }
     };
 
     return (
@@ -100,44 +116,8 @@ const QuizCard = () => {
                         animation: 'flash 0.5s ease-in-out',
                     }}
                 ></div>
-
             )}
             {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
-            {/* {showFlames && <div className="flames"></div>} */}
-
-            {showQuestionNumber && (
-                <>
-                    <h1
-                        className={animateHeading ? 'rotateAnimation' : ''}
-                        style={{
-                            fontFamily: "'Orbitron', sans-serif",
-                            marginBottom: '20px',
-                            zIndex: 2,
-                            fontSize: '9rem',
-                            fontWeight: 'bold',
-                            background: 'linear-gradient(45deg, #ff007f, #ff00ff, #7f00ff, #00b8ff, #00ff00)',
-                            backgroundSize: '300% 300%',
-                            WebkitBackgroundClip: 'text',
-                            backgroundClip: 'text',
-                            color: 'transparent',
-                            textAlign: 'center',
-                            position: 'absolute',
-                            transformOrigin: 'center',
-                        }}
-                    >
-                        Question{' '}
-                        <span
-                            style={{
-                                color: 'white',
-                                textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
-                            }}
-                        >
-                            {questionsAsked + 1}
-                        </span>
-                        <Fireworks />
-                    </h1>
-                </>
-            )}
 
             {!questionLoading && (
                 <Card
@@ -161,34 +141,7 @@ const QuizCard = () => {
                     ) : (
                         <div>
                             {trivia === null ? (
-                                <>
-                                    <Text
-                                        style={{
-                                            color: '#ffffff',
-                                            fontSize: '1.5rem',
-                                            fontWeight: 'bold',
-                                            textAlign: 'center',
-                                            marginTop: '20px',
-                                            marginBottom: '20px',
-                                            textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
-                                        }}
-                                    >
-                                        Party Time
-                                    </Text>
-                                    <Text
-                                        style={{
-                                            color: '#ffffff',
-                                            fontSize: '1rem',
-                                            textAlign: 'center',
-                                            marginTop: '10px',
-                                            textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
-                                        }}
-                                    >
-                                        <br></br>
-                                        This version is 21 questions, chosen at random. Good luck, Titan!
-                                    </Text>
-                                </>
-
+                                <Text style={{ color: '#ffffff' }}>Click the button to start!</Text>
                             ) : (
                                 <div>
                                     <Title level={4} style={{ color: '#ffffff' }}>
@@ -237,14 +190,13 @@ const QuizCard = () => {
                             <Button
                                 onClick={getRandomQuestion}
                                 style={{
-                                    background:
-                                        'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)',
+                                    background: 'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)',
                                     color: '#ffffff',
                                     border: '1px solid #555555',
                                     marginTop: '10px',
                                 }}
                             >
-                                {trivia === null ? 'Lets Play' : 'Next Question'}
+                                {trivia === null ? 'Let’s Play' : 'Next Question'}
                             </Button>
                             <Divider />
                             <Text style={{ color: '#ffffff' }}>Score: {score}</Text>
@@ -254,6 +206,39 @@ const QuizCard = () => {
                     )}
                 </Card>
             )}
+
+            {/* Game Over Modal */}
+            <Modal
+                title="Game Over"
+                visible={isGameOverModalVisible}
+                onCancel={() => setIsGameOverModalVisible(false)}
+                footer={null}
+                centered
+            >
+                <p>Your final score: {score}</p>
+                <Button
+                    onClick={handleSaveScore}
+                    style={{
+                        marginTop: '10px',
+                        backgroundColor: '#28a745',
+                        color: '#fff',
+                        border: 'none',
+                    }}
+                >
+                    Save to Leaderboard
+                </Button>
+                <Button
+                    onClick={() => window.location.reload()}
+                    style={{
+                        marginTop: '10px',
+                        backgroundColor: '#007bff',
+                        color: '#fff',
+                        border: 'none',
+                    }}
+                >
+                    Start Again
+                </Button>
+            </Modal>
         </div>
     );
 };

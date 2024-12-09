@@ -27,14 +27,16 @@ const resolvers = {
         },
 
         // Fetch all leaderboard entries, sorted by score in descending order
-        getLeaderboard: async (_: unknown, __: unknown, _context: any) => {
+        getLeaderboard: async (_: unknown, { limit = 10 }: { limit: number }, _context: any) => {
             try {
-                return await LeaderboardEntryModel.find().sort({ score: -1 });
+              return await LeaderboardEntryModel.find()
+                .sort({ score: -1 })
+                .limit(limit); // Limit results for performance
             } catch (error) {
-                console.error('Error fetching leaderboard:', error);
-                throw new Error('Failed to fetch leaderboard');
+              console.error('Error fetching leaderboard:', error);
+              throw new Error('Failed to fetch leaderboard');
             }
-        },
+          },
 
         // Fetch leaderboard entries filtered by category
         getLeaderboardByCategory: async (_: unknown, { category }: { category: string }, _context: any) => {
@@ -94,25 +96,29 @@ const resolvers = {
         // Add a new entry to the leaderboard
         addLeaderboardEntry: async (
             _: unknown,
-            { username, score, category }: { username: string; score: number; category: string | null },
-            context: any
-          ) => {
-            if (!context.user) {
-              throw new AuthenticationError('You must be logged in to perform this action.');
-            }
+            { score, category }: { score: number; category: string | null },
+            context: any // Assuming context contains the user info
+        ) => {
             try {
-              const newEntry = new LeaderboardEntryModel({
-                username: context.user.username, // Use context.user to ensure authenticated users
-                score,
-                category,
-                createdAt: new Date(),
-              });
-              return await newEntry.save();
+                // Ensure the user is authenticated
+                if (!context.user) {
+                    throw new Error('Not authenticated. Please log in.');
+                }
+        
+                const username = context.user.username; // Get the authenticated user's username
+                const newEntry = new LeaderboardEntryModel({
+                    username, // Include the authenticated user's username
+                    score,
+                    category,
+                    createdAt: new Date(),
+                });
+        
+                return await newEntry.save();
             } catch (error) {
-              console.error('Error adding leaderboard entry:', error);
-              throw new Error('Failed to add leaderboard entry');
+                console.error('Error adding leaderboard entry:', error);
+                throw new Error('Failed to add leaderboard entry');
             }
-          },
+        },
 
         // Reset the leaderboard
         resetLeaderboard: async (_: unknown, __: unknown, _context: any) => {

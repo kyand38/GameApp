@@ -8,7 +8,7 @@ import Navbar from '../components/navbar';
 import Logo from '../images/trivia-titans-logo.png'
 import Fireworks from '../components/Fireworks';
 import SparkleEffect from '../components/SparkleComponent';
-
+import Leaderboard from '../components/Leaderboard';
 
 const useStyle = createStyles(({ prefixCls, css }) => ({
     linearGradientButton: css`
@@ -188,6 +188,7 @@ const Home = () => {
         <>
         <SparkleEffect />  
             <Navbar />
+            <Leaderboard />
             <div className={styles.container}>
                 <Fireworks />
                 <div>
