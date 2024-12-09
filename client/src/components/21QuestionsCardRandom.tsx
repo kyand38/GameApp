@@ -22,7 +22,7 @@ const QuizCard = () => {
     const [showExplanation, setShowExplanation] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
-    const [showFlames, setShowFlames] = useState(false);
+    //const [showFlames, setShowFlames] = useState(false);
     const [showQuestionNumber, setShowQuestionNumber] = useState(false);
     const [questionLoading, setQuestionLoading] = useState(false);
     const [animateHeading, setAnimateHeading] = useState(false);
@@ -46,7 +46,7 @@ const QuizCard = () => {
                 setShowExplanation(false);
                 setSelectedAnswer(null);
                 setShowConfetti(false);
-                setShowFlames(false);
+               // setShowFlames(false);
             } catch (error) {
                 console.error('Error fetching question:', error);
             } finally {
@@ -103,7 +103,7 @@ const QuizCard = () => {
 
             )}
             {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
-            {showFlames && <div className="flames"></div>}
+            {/* {showFlames && <div className="flames"></div>} */}
 
             {showQuestionNumber && (
                 <>

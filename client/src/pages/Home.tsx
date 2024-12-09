@@ -160,8 +160,8 @@ const Home = () => {
         });
 
         gsap.to('.image', {
-          rotationX: 360, // Rotates the image along the X axis
-          rotationY: 360, // Rotates the image along the Y axis
+          rotationX: 360,
+          rotationY: 360,
           duration: 2
         });
 
@@ -196,7 +196,7 @@ const Home = () => {
                     <ConfigProvider button={{ className: styles.linearGradientButton }}>
                         <Space>
                             <Button
-                                className={`${styles.button} button`}
+                                className={`${styles.button} button spikyButton`}
                                 type="primary"
                                 size="large"
                                 icon={<AntDesignOutlined />}
