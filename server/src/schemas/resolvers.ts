@@ -95,21 +95,24 @@ const resolvers = {
         addLeaderboardEntry: async (
             _: unknown,
             { username, score, category }: { username: string; score: number; category: string | null },
-            _context: any
-        ) => {
-            try {
-                const newEntry = new LeaderboardEntryModel({
-                    username,
-                    score,
-                    category,
-                    createdAt: new Date(),
-                });
-                return await newEntry.save();
-            } catch (error) {
-                console.error('Error adding leaderboard entry:', error);
-                throw new Error('Failed to add leaderboard entry');
+            context: any
+          ) => {
+            if (!context.user) {
+              throw new AuthenticationError('You must be logged in to perform this action.');
             }
-        },
+            try {
+              const newEntry = new LeaderboardEntryModel({
+                username: context.user.username, // Use context.user to ensure authenticated users
+                score,
+                category,
+                createdAt: new Date(),
+              });
+              return await newEntry.save();
+            } catch (error) {
+              console.error('Error adding leaderboard entry:', error);
+              throw new Error('Failed to add leaderboard entry');
+            }
+          },
 
         // Reset the leaderboard
         resetLeaderboard: async (_: unknown, __: unknown, _context: any) => {
