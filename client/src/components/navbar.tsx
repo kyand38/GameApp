@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import SignUpForm from './Signup';
+//import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 //import Login from './Login';
 import Auth from '../utils/auth';
 import { createStyles } from 'antd-style';
@@ -140,24 +140,25 @@ const Navbar = () => {
                         Contribute
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <button
-                        className="signup-button"
-                        onClick={() => setShowModal(true)}
+                <li className={styles.navItem}>
+                    <Link
+                        className={styles.navLink} to="/"
+                       // onClick={() => setShowModal(true)}
                     >
                         Sign Up
-                    </button>
+                    </Link>
                 </li>
-                <li className="nav-item">
-                    <button
-                        className="signup-button"
-                        onClick={() => setshowLoginModal(true)}
+              
+                <li  className={styles.navItem}>
+                    <Link
+                           className={styles.navLink} to="/"
+                     //   onClick={() => setshowLoginModal(true)}
                     >
                         login
-                    </button>
+                    </Link>
                 </li>
             </ul>
-            {showLoginModal && (
+            {/* {showLoginModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <button
@@ -184,7 +185,8 @@ const Navbar = () => {
                         <SignUpForm handleModalClose={() => setShowModal(false)} />
                     </div>
                 </div>
-            )}
+            )} */}
+
         </div>
     );
 };

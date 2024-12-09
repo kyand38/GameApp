@@ -8,6 +8,7 @@ import { Outlet } from 'react-router-dom';
 // import Contribute from './pages/Contribute'
 import {setContext} from '@apollo/client/link/context'
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
+import Navbar from './components/navbar';
 import 'antd/dist/reset.css'
 
 const httpLink = createHttpLink({
@@ -37,6 +38,7 @@ function App() {
   return (
     <>
       <ApolloProvider client={client}>
+        <Navbar />
         <Outlet />
       </ApolloProvider>
     </>

@@ -1,4 +1,3 @@
-import Navbar from "../components/navbar";
 import ProfileCard from "../components/ProfileCard";
 import { createStyles } from 'antd-style';
 
@@ -29,7 +28,7 @@ const Profile = () => {
 
     return (
         <>
-            <Navbar />
+          
             <div className={styles.mainContainer}>
             <div className={styles.container}>
                 <div className={styles.profileSection}>
