@@ -4,7 +4,6 @@ import { useState } from 'react';
 //import Login from './Login';
 import Auth from '../utils/auth';
 import { createStyles } from 'antd-style';
-
 const useStyle = createStyles(({ css }) => ({
     container: css`
         position: relative;
@@ -32,7 +31,7 @@ const useStyle = createStyles(({ css }) => ({
         transition: transform 0.3s ease, color 0.3s ease;
         &:hover {
             transform: scale(1.1); /* Slightly scale up when hovered */
-            color: #04befe; /* Change color on hover */
+            color: #04BEFE; /* Change color on hover */
         }
     `,
     navLink: css`
@@ -48,19 +47,19 @@ const useStyle = createStyles(({ css }) => ({
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(135deg, #6253e1, #04befe);
+            background: linear-gradient(135deg, #6253E1, #04BEFE);
             opacity: 0;
             transition: opacity 0.3s;
         }
         &:hover {
-            color: #04befe;
+            color: #04BEFE;
         }
         &:hover::after {
             opacity: 1;
         }
     `,
     signupButton: css`
-        background-color: #6253e1;
+        background-color: #6253E1;
         color: white;
         padding: 10px 20px;
         font-size: 1.2rem;
@@ -69,7 +68,7 @@ const useStyle = createStyles(({ css }) => ({
         cursor: pointer;
         transition: background-color 0.3s ease-in-out;
         &:hover {
-            background-color: #04befe;
+            background-color: #04BEFE;
         }
     `,
     modalOverlay: css`
@@ -104,7 +103,6 @@ const useStyle = createStyles(({ css }) => ({
         right: 10px;
         cursor: pointer;
     `,
-    
     // Animations
     '@keyframes slideIn': {
         '0%': { transform: 'translateY(-100%)' },
@@ -115,15 +113,10 @@ const useStyle = createStyles(({ css }) => ({
         '100%': { opacity: 1 },
     }
 }));
-
 const Navbar = () => {
-    const [showModal, setShowModal] = useState(false); 
-    const [showLoginModal, setshowLoginModal] = useState(false); 
-
-   
+    const [showModal, setShowModal] = useState(false);
+    const [showLoginModal, setshowLoginModal] = useState(false);
     const { styles } = useStyle();
-
-
     return (
         <div className={styles.container}>
             <ul className={styles.nav}>
@@ -179,7 +172,6 @@ const Navbar = () => {
                     </div>
                 </div>
             )}
-            
             {showModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -198,5 +190,4 @@ const Navbar = () => {
         </div>
     );
 };
-
 export default Navbar;
