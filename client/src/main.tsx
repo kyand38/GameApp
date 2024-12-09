@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
-// import Signin from './pages/SignIn.js'
+import Signin from './pages/SignIn.js'
 import Home from './pages/Home.js'
 import Game from './pages/Game.js'
 import Profile from './pages/Profile.js'
@@ -20,10 +20,10 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <h1 className='display-2'>Wrong page!</h1>,
     children: [
-      // {
-      //   index: true,
-      //   element: < Signin/>
-      // }, 
+      {
+        index: true,
+        element: < Signin/>
+      }, 
       {
         path: '/home',
         element: < Home/>
