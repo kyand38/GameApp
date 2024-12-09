@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-express' ;
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
 
@@ -8,7 +8,15 @@ const typeDefs = gql`
   email: String
   highScore: [Int]
   }
- # Entrada para agregar un Usuario
+ 
+  type LeaderboardEntry {
+  id: ID!
+  username: String!
+  score: Int!
+  category: String
+  createdAt: String!
+}
+
   input UserInput {
     username: String!
     email: String!
@@ -21,12 +29,16 @@ const typeDefs = gql`
 
   type Query {
     me: User
+    getLeaderboard: [LeaderboardEntry!]!
+    getLeaderboardByCategory(category: String!): [LeaderboardEntry!]!
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    # Crea un nuevo usuario
     addUser(  username: String!, email: String!,  password: String!): Auth
+    addLeaderboardEntry(username: String!, score: Int!, category: String): LeaderboardEntry!
+    # Reset the leaderboard (for admin or testing purposes)
+    resetLeaderboard: String!
   }
 
 
