@@ -6,6 +6,9 @@ import { useEffect } from 'react';
 import { gsap } from 'gsap';
 import Navbar from '../components/navbar';
 import Logo from '../images/trivia-titans-logo.png'
+import Fireworks from '../components/Fireworks';
+import SparkleEffect from '../components/SparkleComponent';
+
 
 const useStyle = createStyles(({ prefixCls, css }) => ({
     linearGradientButton: css`
@@ -122,42 +125,6 @@ const flickerEffect = () => {
 };
 flickerEffect();
 
-// Fireworks effect function
-const Fireworks = () => {
-    const createFirework = () => {
-        for (let i = 0; i < 20; i++) {
-            const firework = document.createElement('div');
-            firework.className = 'firework';
-            document.body.appendChild(firework);
-
-            firework.style.position = 'absolute';
-            firework.style.top = `${Math.random() * window.innerHeight}px`;
-            firework.style.left = `${Math.random() * window.innerWidth}px`;
-            firework.style.width = '10px';
-            firework.style.height = '10px';
-            firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 60%)`;
-            firework.style.borderRadius = '50%';
-            firework.style.opacity = '1';
-
-            gsap.to(firework, {
-                x: Math.random() * 800 - 400,
-                y: Math.random() * 800 - 400,
-                scale: Math.random() * 2 + 1,
-                opacity: 0,
-                duration: 2 + Math.random() * 2,
-                ease: 'power4.out',
-                onComplete: () => firework.remove(),
-            });
-        }
-    };
-
-    useEffect(() => {
-        const interval = setInterval(createFirework, 500);
-        return () => clearInterval(interval);
-    }, []);
-
-    return null;
-};
 
 // Home Component
 const Home = () => {
@@ -193,8 +160,8 @@ const Home = () => {
         });
 
         gsap.to('.image', {
-          rotationX: 360, // Rotates the image along the X axis
-          rotationY: 360, // Rotates the image along the Y axis
+          rotationX: 360,
+          rotationY: 360,
           duration: 2
         });
 
@@ -219,17 +186,17 @@ const Home = () => {
 
     return (
         <>
+        <SparkleEffect />  
             <Navbar />
             <div className={styles.container}>
                 <Fireworks />
-
                 <div>
                     <img src={Logo} alt="Trivia Titan" className={`${styles.image} image`} />
                     <h1 className={`${styles.heading} heading`}>Trivia Titan: Are You Ready to Party?</h1>
                     <ConfigProvider button={{ className: styles.linearGradientButton }}>
                         <Space>
                             <Button
-                                className={`${styles.button} button`}
+                                className={`${styles.button} button spikyButton`}
                                 type="primary"
                                 size="large"
                                 icon={<AntDesignOutlined />}

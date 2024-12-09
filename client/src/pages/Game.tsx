@@ -4,7 +4,6 @@ const Game = () => {
 
     return (
         <>
-        <h1>Triva Titans</h1>
         <Navbar/>
         <div>
         <QuizCard/>
