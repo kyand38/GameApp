@@ -3,7 +3,6 @@ const Game = () => {
 
     return (
         <>
-        <h1>Triva Titans</h1>
         <div>
             <StreakModeCard/>
         </div>
