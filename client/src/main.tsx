@@ -7,7 +7,7 @@ import Home from './pages/Home.js'
 import Game from './pages/Game.js'
 import Profile from './pages/Profile.js'
 import Contribute from './pages/Contribute.js'
-import 'semantic-ui-css/semantic.min.css'
+//import 'semantic-ui-css/semantic.min.css'
 // import CategorySelector from './components/CategorySelector.js'
 import Game1 from './pages/Game1.js'
 import Game2 from './pages/Game2.js'
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: < Signin/>
-      }, 
+      },
       {
         path: '/home',
         element: < Home/>
