@@ -23,7 +23,7 @@ const useStyle = createStyles(({ css }) => ({
         gap: 20px;
         margin: 0;
         padding: 0;
-        opacity: 0;
+        opacity: 1;
         animation: fadeIn 1s forwards; /* Fade in effect */
     `,
     navItem: css`
