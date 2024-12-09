@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-
-import { useMutation, gql } from '@apollo/client';
-
-
+import { useMutation } from '@apollo/client';
+import {  Button } from 'react-bootstrap';
 import { LoginMutations } from '../apollo/mutations'; // Import ADD_USER mutation
 import { useNavigate } from 'react-router-dom';
 
-const Login = ({ handleModalClose }: { handleModalClose: () => void }) => {
+const Login = ({ handleForm }: { handleForm: () => void }) => {
     const navigate = useNavigate();
 
 
@@ -22,7 +20,7 @@ const Login = ({ handleModalClose }: { handleModalClose: () => void }) => {
       const { data } = await LoginMutation({ variables: { email, password } });
       if (data?.login?.token && data?.login?.userExists ) {// Verifica si el usuario existe
         localStorage.setItem('id_token', data.login.token);
-        handleModalClose()
+
         navigate('/home');
       } else {
         console.error('Invalid credentials or user does not exist');
@@ -47,6 +45,15 @@ const Login = ({ handleModalClose }: { handleModalClose: () => void }) => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button type="submit">Login</button>
+
+      <Button
+        //  disabled={!(userFormData.username && userFormData.email && userFormData.password && passwordsMatch)}
+          type='submit'
+          variant='warning'
+          onClick={handleForm}
+          >
+          Signup
+        </Button>
     </form>
   );
 };

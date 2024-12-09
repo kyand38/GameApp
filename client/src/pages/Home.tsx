@@ -4,7 +4,6 @@ import { createStyles } from 'antd-style';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { gsap } from 'gsap';
-import Navbar from '../components/navbar';
 import Logo from '../images/trivia-titans-logo.png'
 import Fireworks from '../components/Fireworks';
 import SparkleEffect from '../components/SparkleComponent';
@@ -184,8 +183,8 @@ const Home = () => {
 
     return (
         <>
-            <Navbar />
-            <SparkleEffect />
+        <SparkleEffect />  
+          
             <div className={styles.container}>
                 <Fireworks />
                 <div>
