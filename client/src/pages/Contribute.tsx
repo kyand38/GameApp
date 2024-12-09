@@ -1,8 +1,6 @@
 
-import Navbar from "../components/navbar";
 import NewQuestionForm from "../components/newQuestionForm";
 import FeedBackForm from "../components/feedBackForm";
-
 import { Card } from 'antd';
 import { createStyles } from 'antd-style';
 // import { useNavigate } from "react-router-dom";
@@ -80,7 +78,6 @@ const Contribute = () => {
 
     return (
         <>
-            <Navbar />
             <div className={styles.container}>
                 <h1 className={`${styles.heading} heading`}>Contribute</h1>
 

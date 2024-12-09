@@ -6,7 +6,7 @@ import Auth from '../utils/auth';
 import type { User } from '../models/User';
 
 
-const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
+const SignupForm = ({ handleForm } : { handleForm: () => void }) => {
   const [userFormData, setUserFormData] = useState<User>({
     username: '',
     email: '',
@@ -56,7 +56,7 @@ const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
       const { token } = data.addUser;
       Auth.login(token); // Save the token to local storage or cookies
         // Close the modal (if applicable)
-      handleModalClose();
+    //andleModalClose();
     } catch (err) {
       console.error(err);
       setShowAlert(true); // Display error alert
@@ -138,6 +138,14 @@ const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
           type='submit'
           variant='success'>
           Submit
+        </Button>
+        <Button
+          disabled={!(userFormData.username && userFormData.email && userFormData.password && passwordsMatch)}
+          type='submit'
+          variant='warning'
+          onClick={handleForm}
+          >
+          Login
         </Button>
       </Form>
     </>
