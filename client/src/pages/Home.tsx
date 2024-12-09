@@ -114,15 +114,15 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
     
 }));
 
-const flickerEffect = () => {
-  gsap.to('.image', {
-      opacity: Math.random() > 0.5 ? 1 : 0,
-      duration: Math.random() * 0.00000001 + 0.00000001, //
-      ease: 'power1.inOut',
-      onComplete: flickerEffect,
-  });
-};
-flickerEffect();
+// const flickerEffect = () => {
+//   gsap.to('.image', {
+//       opacity: Math.random() > 0.5 ? 1 : 0,
+//       duration: Math.random() * 0.00000001 + 0.00000001, //
+//       ease: 'power1.inOut',
+//       onComplete: flickerEffect,
+//   });
+// };
+// flickerEffect();
 
 
 // Home Component
@@ -185,8 +185,7 @@ const Home = () => {
 
     return (
         <>
-        <SparkleEffect />  
-            <Navbar />
+        <SparkleEffect />
             <Leaderboard />
           
             <div className={styles.container}>
