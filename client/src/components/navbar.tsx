@@ -4,15 +4,15 @@ import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import Login from './Login';
 import SignupForm from './Signup';
 import Auth from '../utils/auth';
+import Home from "../images/home.png"
 
 import { createStyles } from 'antd-style';
 // import { Divider } from 'antd';g
 const useStyle = createStyles(({ css }) => ({
     container: css`
-        position: relative;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
         height: 80px;
         background-color: black;
         color: white;
@@ -116,119 +116,53 @@ const useStyle = createStyles(({ css }) => ({
         '100%': { opacity: 1 },
     }
 }));
+
 const AppNavbar = () => {
     const [showModal, setShowModal] = useState(false);
     const { styles } = useStyle();
     return (
         <div className={styles.container}>
-        {/*    <ul className={styles.nav}>
-                <li className={styles.navItem}>
-                    <Link className={styles.navLink} to="/" onClick={Auth.logout}>
-                        Sign out
-                    </Link>
-                </li>
-                <li className={styles.navItem}>
-                    <Link className={styles.navLink} to="/home">
-                        Home
-                    </Link>
-                </li>
-                <li className={styles.navItem}>
-                    <Link className={styles.navLink} to="/profile">
-                        Profile
-                    </Link>
-                </li>
-                <li className={styles.navItem}>
-                    <Link className={styles.navLink} to="/contribute">
-                        Contribute
-                    </Link>
-                </li>
-                <li className={styles.navItem}>
-                    <Link
-                        className={styles.navLink} to="/"
-                    // onClick={() => setShowModal(true)}
-                    >
-                        Sign Up
-                    </Link>
-                </li>
 
-                <li className={styles.navItem}>
-                    <Link
-                        className={styles.navLink} to="/"
-                    //   onClick={() => setshowLoginModal(true)}
-                    >
-                        login
-                    </Link>
-                </li>
-            </ul>
-        */
-        }
-            {/* {showLoginModal && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <button
-                            className="close-button"
-                            onClick={() => setshowLoginModal(false)}
-                        >
-                            &times;
-                        </button>
-                        <h2>Login</h2>
-                    
-                    </div>
-                </div>
-            )}
-            {showModal && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <button
-                            className="close-button"
-                            onClick={() => setShowModal(false)}
-                        >
-                            &times;
-                        </button>
-                        <h2>Sign Up</h2>
-                        <SignUpForm handleModalClose={() => setShowModal(false)} />
-                    </div>
-                </div>
-            )} */}
-      <div>
-        <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-          Trivia Titan
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar' />
-          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
-            <Nav className='ml-auto d-flex'>
-              <Nav.Link as={Link} to='/'>
-                See your Points!
-              </Nav.Link>
-              {/* if user is logged in show profile , contribute and logout */}
-              {Auth.loggedIn() ? (
-                <>
-                 <ul className={styles.nav}>
-                    <li className={styles.navItem}>
-                        <Nav.Link as={Link} to='/profile'>
-                        Profile
-                        </Nav.Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Nav.Link as={Link} to='/contribute'>
-                        Contribute
-                        </Nav.Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
-                    </li>
-                  </ul>
-                </>
-              ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </div>
+            <div>
+                <Container fluid>
+                    <Navbar.Brand as={Link} to='/'>
+                        <img
+                            src={Home}
+                            alt="Home Icon"
+                            style={{ width: '50px', height: '50px', marginRight: '10px' }}
+                        />
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls='navbar' />
+                    <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
+                        <Nav className='ml-auto d-flex'>
+                            {/* if user is logged in show profile , contribute and logout */}
+                            {Auth.loggedIn() ? (
+                                <>
+                                    <ul className={styles.nav}>
+                                        <li className={styles.navItem}>
+                                            <Nav.Link as={Link} to='/profile'>
+                                                Profile
+                                            </Nav.Link>
+                                        </li>
+                                        <li className={styles.navItem}>
+                                            <Nav.Link as={Link} to='/contribute'>
+                                                Contribute
+                                            </Nav.Link>
+                                        </li>
+                                        <li className={styles.navItem}>
+                                            <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                                        </li>
+                                    </ul>
+                                </>
+                            ) : (
+                                <Nav.Link className={styles.navItem} onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                            )}
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </div>
 
-                {/* set modal data up */}
+            {/* set modal data up */}
             <Modal
                 size='lg'
                 show={showModal}
@@ -236,28 +170,28 @@ const AppNavbar = () => {
                 aria-labelledby='signup-modal'>
                 {/* tab container to do either signup or login component */}
                 <Tab.Container defaultActiveKey='login'>
-                <Modal.Header closeButton>
-                    <Modal.Title id='signup-modal'>
-                    <Nav variant='pills'>
-                        <Nav.Item>
-                        <Nav.Link eventKey='login'>Login</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                        <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
-                        </Nav.Item>
-                    </Nav>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Tab.Content>
-                    <Tab.Pane eventKey='login'>
-                        <Login handleForm={() => setShowModal(false)} />
-                    </Tab.Pane>
-                    <Tab.Pane eventKey='signup'>
-                        <SignupForm handleForm={() => setShowModal(false)} />
-                    </Tab.Pane>
-                    </Tab.Content>
-                </Modal.Body>
+                    <Modal.Header closeButton>
+                        <Modal.Title id='signup-modal'>
+                            <Nav variant='pills'>
+                                <Nav.Item>
+                                    <Nav.Link eventKey='login'>Login</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Tab.Content>
+                            <Tab.Pane eventKey='login'>
+                                <Login handleForm={() => setShowModal(false)} />
+                            </Tab.Pane>
+                            <Tab.Pane eventKey='signup'>
+                                <SignupForm handleForm={() => setShowModal(false)} />
+                            </Tab.Pane>
+                        </Tab.Content>
+                    </Modal.Body>
                 </Tab.Container>
             </Modal>
         </div>
