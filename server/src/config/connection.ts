@@ -15,5 +15,10 @@ const db = async (): Promise<typeof mongoose.connection> => {
     throw new Error('Database connection failed.');
   }
 };
-
+  
+  db().catch((err) => {
+    console.error('Failed to connect to database:', err);
+    process.exit(1);
+  });
+  
 export default db;

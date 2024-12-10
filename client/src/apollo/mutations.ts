@@ -24,3 +24,23 @@ mutation Login($email: String!, $password: String!) {
   }
 }`
 
+export const ADD_LEADERBOARD_ENTRY = gql`
+mutation AddLeaderboardEntry($username: String!, $score: Int!) {
+  addLeaderboardEntry(username: $username, score: $score) {
+    id
+    username
+    score
+    createdAt
+    category
+  }
+}`
+
+// query GetLeaderboard {
+//   getLeaderboard {
+//     id
+//     username
+//     score
+//     category
+//     createdAt
+//   }
+// }
