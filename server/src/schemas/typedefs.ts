@@ -29,7 +29,7 @@ const typeDefs = gql`
 
   type Query {
     me: User
-    getLeaderboard: [LeaderboardEntry!]!
+    getLeaderboard(limit: Int): [LeaderboardEntry!]!
     getLeaderboardByCategory(category: String!): [LeaderboardEntry!]!
   }
 

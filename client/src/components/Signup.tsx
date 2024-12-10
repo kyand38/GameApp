@@ -5,19 +5,16 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import type { User } from '../models/User';
 
-
-const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
+const SignupForm = ({ handleForm } : { handleForm: () => void }) => {
   const [userFormData, setUserFormData] = useState<User>({
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
   });
-
   const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
-
   // Apollo mutation hook for creating a new user
   const [addUserMutation] = useMutation(ADD_USER);
 
@@ -28,10 +25,8 @@ const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
       setPasswordsMatch(userFormData.password === value);
     }
   };
-
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const form = event.currentTarget;
     if (form.checkValidity() === false|| !passwordsMatch ) {
       event.preventDefault();
@@ -39,24 +34,20 @@ const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
       setValidated(true);
       return;
     }
-
     try {
       // Perform addUser mutation using Apollo Client
       const { data } = await addUserMutation({
-        variables: {
-         
+        variables: {    
             username: userFormData.username,
             email: userFormData.email,
-            password: userFormData.password,
-          
+            password: userFormData.password,   
         },
       });
-
       // Assuming `data.addUser.token` returns a token
       const { token } = data.addUser;
       Auth.login(token); // Save the token to local storage or cookies
         // Close the modal (if applicable)
-      handleModalClose();
+    //andleModalClose();
     } catch (err) {
       console.error(err);
       setShowAlert(true); // Display error alert

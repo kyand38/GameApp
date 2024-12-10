@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Divider, Card, Typography, Modal } from 'antd';
 import Confetti from 'react-confetti';
+import SparkleEffect from './SparkleComponent';
 
 const { Text, Title } = Typography;
 
@@ -25,6 +26,8 @@ const CategoryQuizCard = () => {
     const [showExplanation, setShowExplanation] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isGameOver, setIsGameOver] = useState(false);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1); // Track current question index
+    const [isQuestionVisible, setIsQuestionVisible] = useState(false); // New state for visibility of the h1
 
     const MAX_QUESTIONS = 21;
 
@@ -56,15 +59,13 @@ const CategoryQuizCard = () => {
         'Geology',
     ];
 
-    const fetchTriviaByCategory = async () => {
-        if (!category) return;
-
+    const fetchTriviaByCategory = async (selectedCategory: string) => {
         try {
-            const url = `/api/quiz/trivia-by-category?category=${encodeURIComponent(category)}`;
+            const url = `/api/quiz/trivia-by-category?category=${encodeURIComponent(selectedCategory)}`;
             const response = await fetch(url, { method: 'GET' });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
-
+    
             setAllQuestions(result);
             setUsedIndices([]);
             pickRandomQuestion(result, []);
@@ -87,9 +88,14 @@ const CategoryQuizCard = () => {
         setUsedIndices([...used, randomIndex]);
         setTrivia(questions[randomIndex]);
         setQuestionsAsked((prev) => prev + 1);
+        setCurrentQuestionIndex(questionsAsked + 1); // Update the current question index
         setShowExplanation(false);
         setSelectedAnswer(null);
         setShowConfetti(false);
+
+        // Show the question index for 4 seconds
+        setIsQuestionVisible(true);
+        setTimeout(() => setIsQuestionVisible(false), 4000);
     };
 
     const handleAnswerClick = (answer: string) => {
@@ -108,7 +114,7 @@ const CategoryQuizCard = () => {
     const handleCategorySelect = (selectedCategory: string) => {
         setCategory(selectedCategory);
         setIsModalOpen(false);
-        fetchTriviaByCategory();
+        fetchTriviaByCategory(selectedCategory);
     };
 
     const restartGame = () => {
@@ -117,7 +123,7 @@ const CategoryQuizCard = () => {
         setQuestionsAsked(0);
         setTrivia(null);
         setUsedIndices([]);
-        fetchTriviaByCategory();
+        // fetchTriviaByCategory(selectedCategory);
     };
 
     return (
@@ -128,11 +134,12 @@ const CategoryQuizCard = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: '100vh',
-                backgroundColor: '#1a1a1a',
+                backgroundColor: 'black',
             }}
         >
+            <SparkleEffect />
             {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
-
+    
             {isGameOver ? (
                 <Card
                     style={{
@@ -184,17 +191,7 @@ const CategoryQuizCard = () => {
                         Choose Category
                     </Button>
                     <Divider />
-                    <Button
-                        onClick={() => pickRandomQuestion(allQuestions, usedIndices)}
-                        disabled={allQuestions.length === 0}
-                        style={{
-                            background: 'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)',
-                            color: '#ffffff',
-                            border: '1px solid #555555',
-                        }}
-                    >
-                        Get Question
-                    </Button>
+    
                     {trivia && (
                         <Card
                             style={{
@@ -216,39 +213,60 @@ const CategoryQuizCard = () => {
                             <br />
                             <Text style={{ color: '#ffffff' }}>Questions Asked: {questionsAsked}/21</Text>
                             <Divider />
-                            <Text style={{ color: '#ffffff' }}>{trivia.question}</Text>
-                            <Divider />
-                            {trivia.answers.map((answer: string, index: number) => (
-                                <Button
-                                    key={index}
-                                    onClick={() => handleAnswerClick(answer)}
-                                    style={{
-                                        margin: '5px',
-                                        backgroundColor: '#333333',
-                                        color: '#ffffff',
-                                        border: '1px solid #555555',
-                                        width: '80%',
-                                    }}
-                                >
-                                    {answer}
-                                </Button>
-                            ))}
-                            {showExplanation && selectedAnswer && (
-                                <div style={{ marginTop: '10px' }}>
-                                    <Text style={{ color: '#ffffff', fontWeight: 'bold' }}>
-                                        {selectedAnswer === trivia.correct
-                                            ? 'Correct!'
-                                            : `Wrong! The correct answer is: ${trivia.correct}`}
-                                    </Text>
-                                    <br />
-                                    <Text style={{ color: '#ffffff' }}>{trivia.explanation}</Text>
-                                </div>
+                            {/* Conditionally render the question index */}
+                            {isQuestionVisible ? (
+                                <h1 style={{ color: '#ffffff' }}>
+                                    Question {currentQuestionIndex} of {MAX_QUESTIONS}
+                                </h1>
+                            ) : (
+                                <>
+                                    <Text style={{ color: '#ffffff' }}>{trivia.question}</Text>
+                                    <Divider />
+                                    {trivia.answers.map((answer: string, index: number) => (
+                                        <Button
+                                            key={index}
+                                            onClick={() => handleAnswerClick(answer)}
+                                            style={{
+                                                margin: '5px',
+                                                backgroundColor: '#333333',
+                                                color: '#ffffff',
+                                                border: '1px solid #555555',
+                                                width: '80%',
+                                            }}
+                                        >
+                                            {answer}
+                                        </Button>
+                                    ))}
+                                    {showExplanation && selectedAnswer && (
+                                        <div style={{ marginTop: '10px' }}>
+                                            <Text style={{ color: '#ffffff', fontWeight: 'bold' }}>
+                                                {selectedAnswer === trivia.correct
+                                                    ? 'Correct!'
+                                                    : `Wrong! The correct answer is: ${trivia.correct}`}
+                                            </Text>
+                                            <br />
+                                            <Text style={{ color: '#ffffff' }}>{trivia.explanation}</Text>
+                                            <br></br>
+                                            <Button
+                                                onClick={() => pickRandomQuestion(allQuestions, usedIndices)}
+                                                disabled={allQuestions.length === 0}
+                                                style={{
+                                                    background: 'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)',
+                                                    color: '#ffffff',
+                                                    border: '1px solid #555555',
+                                                }}
+                                            >
+                                                Next Question
+                                            </Button>
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </Card>
                     )}
                 </>
             )}
-
+    
             {/* Category Selector Modal */}
             <Modal
                 title="Select a Category"
@@ -280,6 +298,6 @@ const CategoryQuizCard = () => {
             </Modal>
         </div>
     );
-};
+}    
 
 export default CategoryQuizCard;

@@ -4,11 +4,10 @@ import { createStyles } from 'antd-style';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { gsap } from 'gsap';
-import Navbar from '../components/navbar';
 import Logo from '../images/trivia-titans-logo.png'
 import Fireworks from '../components/Fireworks';
 import SparkleEffect from '../components/SparkleComponent';
-
+import Leaderboard from '../components/Leaderboard';
 
 const useStyle = createStyles(({ prefixCls, css }) => ({
     linearGradientButton: css`
@@ -97,11 +96,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
         margin-bottom: 50px;
         z-index: 2;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-        //box-shadow: 0 0 10px 4px rgba(0, 255, 255, 0.7), 0 0 20px 6px rgba(255, 0, 255, 0.7);
-         &:hover {
-            text-shadow: 0 0 100px rgba(255, 255, 255, 0.9), 0 0 10px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 255, 255, 0.7);
-        }
+        
 
     `,
     '@keyframes spin': {
@@ -112,18 +107,8 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
             transform: 'rotate(360deg)',
         },
     },
-    
-}));
 
-const flickerEffect = () => {
-  gsap.to('.image', {
-      opacity: Math.random() > 0.5 ? 1 : 0,
-      duration: Math.random() * 0.00000001 + 0.00000001, //
-      ease: 'power1.inOut',
-      onComplete: flickerEffect,
-  });
-};
-flickerEffect();
+}));
 
 
 // Home Component
@@ -134,14 +119,18 @@ const Home = () => {
     const handleGameClick = () => {
         navigate('/game');
     };
-    const handleScoresClick = () => {
-        navigate('/home');
+    const handleGame2Click = () => {
+        navigate('/game2');
     };
+    // const handleScoresClick = () => {
+    //     navigate('/home');
+    // };
     const handleStreakClick = () => {
-        navigate('/home');
+        navigate('/game1');
     };
 
     useEffect(() => {
+        // Initial animation for the image
         gsap.from('.image', {
             opacity: 0,
             scale: 0.8,
@@ -149,22 +138,29 @@ const Home = () => {
             duration: 2,
             ease: 'back.out(1.7)',
             onComplete: () => {
+                // Scale bounce effect
                 gsap.to('.image', {
                     scale: 1.1,
                     duration: 0.4,
                     ease: 'power1.out',
                     yoyo: true,
                     repeat: 1,
+                    onComplete: () => {
+                        // Start infinite Y-axis rotation
+                        gsap.to('.image', {
+                            rotationY: 360,
+                            transformOrigin: "50% 50%",
+                            duration: 4, // Adjust for slower or faster rotation
+                            ease: 'linear', // Smooth rotation
+                            repeat: -1, // Infinite rotation
+                            repeatDelay: 2, // No delay before repeating
+                        });
+                    },
                 });
             },
         });
 
-        gsap.to('.image', {
-          rotationX: 360,
-          rotationY: 360,
-          duration: 2
-        });
-
+        // Animations for heading and buttons
         gsap.to('.heading', {
             opacity: 1,
             y: 0,
@@ -184,10 +180,10 @@ const Home = () => {
         });
     }, []);
 
+
     return (
         <>
-        <SparkleEffect />  
-            <Navbar />
+        <SparkleEffect />
             <div className={styles.container}>
                 <Fireworks />
                 <div>
@@ -205,14 +201,15 @@ const Home = () => {
                                 21 Questions
                             </Button>
                             <Button
-                                className={`${styles.button} button`}
+                                className={`${styles.button} button spikyButton`}
                                 type="primary"
                                 size="large"
                                 icon={<AntDesignOutlined />}
-                                onClick={handleScoresClick}
+                                onClick={handleGame2Click}
                             >
-                                View High Scores
+                                21 Questions (Category)
                             </Button>
+                            <Leaderboard buttonStyle={styles.button}/>
                             <Button
                                 className={`${styles.button} button`}
                                 type="primary"
