@@ -6,6 +6,7 @@ import SignupForm from './Signup';
 import Auth from '../utils/auth';
 
 import { createStyles } from 'antd-style';
+import { Divider } from 'antd';
 const useStyle = createStyles(({ css }) => ({
     container: css`
         position: relative;
@@ -189,7 +190,7 @@ const AppNavbar = () => {
                     </div>
                 </div>
             )} */}
-      <Navbar bg='dark' variant='dark' expand='lg'>
+      <div>
         <Container fluid>
           <Navbar.Brand as={Link} to='/'>
           Trivia Titan
@@ -200,16 +201,24 @@ const AppNavbar = () => {
               <Nav.Link as={Link} to='/'>
                 See your Points!
               </Nav.Link>
-              {/* if user is logged in show saved books and logout */}
+              {/* if user is logged in show profile , contribute and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/profile'>
-                    Profile
-                  </Nav.Link>
-                  <Nav.Link as={Link} to='/contribute'>
-                    Contribute
-                  </Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                 <ul className={styles.nav}>
+                    <li className={styles.navItem}>
+                        <Nav.Link as={Link} to='/profile'>
+                        Profile
+                        </Nav.Link>
+                    </li>
+                    <li className={styles.navItem}>
+                        <Nav.Link as={Link} to='/contribute'>
+                        Contribute
+                        </Nav.Link>
+                    </li>
+                    <li className={styles.navItem}>
+                        <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                    </li>
+                  </ul>
                 </>
               ) : (
                 <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
@@ -217,7 +226,7 @@ const AppNavbar = () => {
             </Nav>
           </Navbar.Collapse>
         </Container>
-      </Navbar>
+      </div>
 
                 {/* set modal data up */}
             <Modal
