@@ -8,6 +8,7 @@ import { useMutation } from '@apollo/client';
 import { ADD_LEADERBOARD_ENTRY } from '../apollo/mutations';
 import AuthService from '../utils/auth'; // Import your AuthService
 
+// Destructure the Typography components
 const { Text, Title } = Typography;
 
 interface QuestionCardProps {
@@ -18,6 +19,7 @@ interface QuestionCardProps {
     explanation: string;
 }
 
+// Streak mode card component
 const StreakModeCard = () => {
     const [trivia, setTrivia] = useState<QuestionCardProps | null>(null);
     const [streak, setStreak] = useState(0);
@@ -30,6 +32,7 @@ const StreakModeCard = () => {
     const [showStreakOnly, _setShowStreakOnly] = useState(false); // New state for exclusive streak display
     const [addLeaderboardEntry] = useMutation(ADD_LEADERBOARD_ENTRY);
 
+    // Function to fetch a random question
     const getRandomQuestion = async () => {
         try {
             const response = await fetch('/api/quiz/random-question', { method: 'GET' });
@@ -47,9 +50,10 @@ const StreakModeCard = () => {
         }
     };
 
+    // Function to add the final streak to the leaderboard
     const handleGameOver = async () => {
         const user = AuthService.getProfile(); // Retrieve user profile
-        const username = user?.data?.username || 'Anonymous'; // Fallback to 'Anonymous' if no username
+        const username = user?.data.username || 'Anonymous'; // Fallback to 'Anonymous' if no username
     
         try {
             await addLeaderboardEntry({
@@ -65,6 +69,7 @@ const StreakModeCard = () => {
         }
     };
 
+    // Function to handle answer button clicks
     const handleAnswerClick = (answer: string) => {
         setSelectedAnswer(answer);
         setShowExplanation(true);
@@ -78,30 +83,28 @@ const StreakModeCard = () => {
             // Add to leaderboard when the game ends
             handleGameOver();
         } else {
-            setShowRedOverlay(true);
-            setTimeout(() => setShowRedOverlay(false), 2500);
-            setGameOver(true);
+            setStreak(streak + 1);
+            setShowConfetti(true);
 
             // Submit the final streak to the leaderboard
-            const user = AuthService.getProfile(); // Retrieve user profile
+            // const user = AuthService.getProfile(); // Retrieve user profile
             
-
-            addLeaderboardEntry({
-                variables: {
-                    username: user?.username || 'Anonymous', // Fallback to 'Anonymous' if username is missing
-                    score: streak,
-                },
-            })
-            .then(() => {
-                message.success('Score added to the leaderboard!');
-            })
-            .catch((err) => {
-                console.error('Error adding leaderboard entry:', err);
-                message.error('Failed to update leaderboard.');
-            });
+            // addLeaderboardEntry({
+            //     variables: {
+            //         username: user?.data.username || 'Anonymous', // Fallback to 'Anonymous' if username is missing
+            //         score: streak,
+            //     },
+            // })
+            // .then(() => {
+            //     message.success('Score added to the leaderboard!');
+            // })
+            // .catch((err) => {
+            //     console.error('Error adding leaderboard entry:', err);
+            //     message.error('Failed to update leaderboard.');
+            // });
         }
     };
-
+    // Function to reset the game
     const resetGame = () => {
         setStreak(0);
         setGameOver(false);
@@ -109,6 +112,7 @@ const StreakModeCard = () => {
         setButtonLabel('First Question');
     };
 
+    // New function to toggle the exclusive streak display
     if (showStreakOnly && streak > 0) {
         return (
             <div

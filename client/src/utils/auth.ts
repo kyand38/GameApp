@@ -7,7 +7,6 @@ interface JwtPayload {
   username: string;
   email: string;
   id: string;
-  data: string;
 }
 
 // create an interface for the token
@@ -26,7 +25,7 @@ class AuthService {
     if (!token) return null;
 
     try {
-      const decoded = jwtDecode<JwtPayload>(token);
+      const decoded = jwtDecode<UserToken>(token);
       console.log('User profile:', decoded);
       return decoded; // Now it has 'username', 'email', and 'id'
     } catch (error) {

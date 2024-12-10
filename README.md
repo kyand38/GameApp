@@ -3,7 +3,7 @@
 [![License Badge](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-Triva Titans allows a user to test their triva knowledge in one of our three modes, 21 questions, infinte streak, 21 questions by category. The quizmania api is used to generate questions for the user. When the user is loged in they are able to edit their profile, access the contribute page, and view the leaderboard. JWT encryption is used to protect user passwords and to authenticate users on the database.
+Triva Titans allows a user to test their triva knowledge in one of our three modes, 21 questions, infinite streak, 21 questions by category. The Quizmania api is used to generate questions for the user. When the user is loged in they are able to edit their profile, access the contribute page, and view the leaderboard. JWT encryption is used to protect user passwords and to authenticate users on the database.
 
 ## Table of Contents
 - [Features](#features)
@@ -64,7 +64,7 @@ https://github.com/kyand38/Trivia-Titans.git
 </p>
 
 <p align="center">
-  <img src="./assets/Logged.png" alt="Book Save" width="600"/>
+  <img src="./assets/Logged.png" alt="Save" width="600"/>
 </p>
 
 ## 3 Game modes
@@ -106,19 +106,12 @@ Data Privacy Assurance
 Contributions are welcome! Feel free to open issues or submit pull requests to improve this project Feedback can also be given on the contribute page.
 
 ## License
-This project is licensed under the MIT License.  
-Copyright (c) 2024 Kyle Anderson and partners
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+This application is covered under the following license: [MIT License](https://www.gnu.org/licenses/gpl-3.0)
 
 ## Questions?
  If you have any questions, feel free to contact us:
 
-- GitHub: Trinigch
-- GitHub: JoshAskew
-- GitHub: MrBalld
-- GitHub: kyand38
+- [GitHub: Trinidad Peterson](https://github.com/trinigch)
+- [GitHub: Josh Askew](https://github.com/JoshAskew)
+- [GitHub: Devan Ballantine](https://github.com/MrBalld)
+- [GitHub: Kyle Anderson](https://github.com/kyand38)
