@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-//import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
-//import Login from './Login';
+import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
+import Login from './Login';
+import SignupForm from './Signup';
 import Auth from '../utils/auth';
+
 import { createStyles } from 'antd-style';
+import { Divider } from 'antd';
 const useStyle = createStyles(({ css }) => ({
     container: css`
         position: relative;
@@ -113,13 +116,12 @@ const useStyle = createStyles(({ css }) => ({
         '100%': { opacity: 1 },
     }
 }));
-const Navbar = () => {
+const AppNavbar = () => {
     const [showModal, setShowModal] = useState(false);
-    const [showLoginModal, setshowLoginModal] = useState(false);
     const { styles } = useStyle();
     return (
         <div className={styles.container}>
-            <ul className={styles.nav}>
+        {/*    <ul className={styles.nav}>
                 <li className={styles.navItem}>
                     <Link className={styles.navLink} to="/" onClick={Auth.logout}>
                         Sign out
@@ -158,6 +160,8 @@ const Navbar = () => {
                     </Link>
                 </li>
             </ul>
+        */
+        }
             {/* {showLoginModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -186,8 +190,77 @@ const Navbar = () => {
                     </div>
                 </div>
             )} */}
+      <div>
+        <Container fluid>
+          <Navbar.Brand as={Link} to='/'>
+          Trivia Titan
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls='navbar' />
+          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
+            <Nav className='ml-auto d-flex'>
+              <Nav.Link as={Link} to='/'>
+                See your Points!
+              </Nav.Link>
+              {/* if user is logged in show profile , contribute and logout */}
+              {Auth.loggedIn() ? (
+                <>
+                 <ul className={styles.nav}>
+                    <li className={styles.navItem}>
+                        <Nav.Link as={Link} to='/profile'>
+                        Profile
+                        </Nav.Link>
+                    </li>
+                    <li className={styles.navItem}>
+                        <Nav.Link as={Link} to='/contribute'>
+                        Contribute
+                        </Nav.Link>
+                    </li>
+                    <li className={styles.navItem}>
+                        <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+                    </li>
+                  </ul>
+                </>
+              ) : (
+                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </div>
 
+                {/* set modal data up */}
+            <Modal
+                size='lg'
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                aria-labelledby='signup-modal'>
+                {/* tab container to do either signup or login component */}
+                <Tab.Container defaultActiveKey='login'>
+                <Modal.Header closeButton>
+                    <Modal.Title id='signup-modal'>
+                    <Nav variant='pills'>
+                        <Nav.Item>
+                        <Nav.Link eventKey='login'>Login</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                        <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Tab.Content>
+                    <Tab.Pane eventKey='login'>
+                        <Login handleForm={() => setShowModal(false)} />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey='signup'>
+                        <SignupForm handleForm={() => setShowModal(false)} />
+                    </Tab.Pane>
+                    </Tab.Content>
+                </Modal.Body>
+                </Tab.Container>
+            </Modal>
         </div>
     );
 };
-export default Navbar;
+export default AppNavbar;
