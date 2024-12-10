@@ -1,13 +1,13 @@
 import React from 'react';
 import type { FormProps } from 'antd';
 import { Button, Form, Input } from 'antd';
+import SparkleEffect from './SparkleComponent';
 
 type FieldType = {
     question: string;
     answer1: string;
     answer2: string;
     answer3: string;
-    answer4: string;
     correct: string;
 };
 
@@ -24,7 +24,10 @@ const NewQuestionForm: React.FC = () => (
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
+        style={{ 
+            maxWidth: 600 
+            
+        }}
         initialValues={{ remember: false }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -62,13 +65,6 @@ const NewQuestionForm: React.FC = () => (
             <Input />
         </Form.Item>
 
-        <Form.Item<FieldType>
-            label="Fourth possible Answer"
-            name="answer4"
-            rules={[{ required: true, message: 'Please input your fourth possible answer!' }]}
-        >
-            <Input />
-        </Form.Item>
 
         <Form.Item<FieldType>
             label="Correct answer"
