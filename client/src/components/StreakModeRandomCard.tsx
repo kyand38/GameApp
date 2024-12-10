@@ -29,7 +29,7 @@ const StreakModeCard = () => {
     const [showConfetti, setShowConfetti] = useState(false);
     const [buttonLabel, setButtonLabel] = useState('First Question');
     const [showRedOverlay, setShowRedOverlay] = useState(false);
-    const [showStreakOnly, _setShowStreakOnly] = useState(false); // New state for exclusive streak display
+    const [showStreakOnly, setShowStreakOnly] = useState(false); // New state for exclusive streak display
     const [addLeaderboardEntry] = useMutation(ADD_LEADERBOARD_ENTRY);
 
     // Function to fetch a random question
@@ -45,9 +45,10 @@ const StreakModeCard = () => {
             setSelectedAnswer(null);
             setShowConfetti(false);
             setButtonLabel('Next Question');
+            setShowStreakOnly(true);
         } catch (error) {
             console.error('Error fetching question:', error);
-        }
+        } 
     };
 
     // Function to add the final streak to the leaderboard
@@ -114,6 +115,9 @@ const StreakModeCard = () => {
 
     // New function to toggle the exclusive streak display
     if (showStreakOnly && streak > 0) {
+        setTimeout(() => {
+            setShowStreakOnly(false);
+        }, 4000);
         return (
             <div
                 style={{
