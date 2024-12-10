@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Button, Divider, Card, Typography } from 'antd';
 import '../assets/styles/flames.css'; // Optional CSS for flames
 import Confetti from 'react-confetti';
+import SparkleEffect from '../components/SparkleComponent';
+import Fireworks from '../components/Fireworks';
 
 const { Text, Title } = Typography;
 
@@ -70,9 +72,10 @@ const StreakModeCard = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: '100vh',
-                backgroundColor: '#1a1a1a',
+                backgroundColor: 'black',
             }}
         >
+            <SparkleEffect />
             {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
             {showFlames && <div className="flames"></div>}
 
@@ -108,10 +111,32 @@ const StreakModeCard = () => {
                         </Button>
                     </div>
                 ) : (
+                    
                     <div>
                         {trivia === null ? (
-                            <Text style={{ color: '#ffffff' }}>Click the button to start!</Text>
-                        ) : (
+                            <div>
+                            <Text  style={{
+                                            color: '#ffffff',
+                                            fontSize: '1.5rem',
+                                            fontWeight: 'bold',
+                                            textAlign: 'center',
+                                            marginTop: '20px',
+                                            marginBottom: '20px',
+                                            textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
+                                        }}>Click the button to start!</Text>
+                            <br></br>
+                            <Text
+                             style={{
+                                color: '#ffffff',
+                                fontSize: '1rem',
+                                textAlign: 'center',
+                                marginTop: '10px',
+                                textShadow: '0 0 10px rgba(255, 255, 255, 0.5)',
+                            }}
+                            >See how many questions you can get correct in a row!</Text>
+                        </div>
+                    )
+                        : (
                             <div>
                                 <Title level={4} style={{ color: '#ffffff' }}>
                                     Category: {trivia.category}
@@ -140,9 +165,12 @@ const StreakModeCard = () => {
                                 {showExplanation && (
                                     <div style={{ marginTop: '15px' }}>
                                         <Text style={{ color: '#ffffff' }}>
-                                            {selectedAnswer === trivia?.correct
-                                                ? 'Correct!'
-                                                : `Wrong! The correct answer is: ${trivia?.correct}`}
+                                        {selectedAnswer === trivia.correct
+                                                    ? 'Correct! '
+                                                    : `Wrong! The correct answer was: `}
+                                                <span style={{ color: 'lightgreen', fontWeight: 'bold' }}>
+                                                    {trivia.correct}
+                                                </span>
                                         </Text>
                                         <br />
                                         <Text style={{ color: '#ffffff' }}>Explanation: {trivia?.explanation}</Text>
@@ -165,6 +193,7 @@ const StreakModeCard = () => {
                         <Divider />
                         <Text style={{ color: '#ffffff' }}>Current Streak: {streak}</Text>
                     </div>
+                    
                 )}
             </Card>
         </div>
