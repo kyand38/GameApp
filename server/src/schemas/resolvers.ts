@@ -23,7 +23,7 @@ const resolvers = {
         me: async (_parent: unknown, _args: UserArgs, context: any) => {
             console.log('Here is context', context.user)
 
-            return await User.findOne({ _id: context.user._id });
+            return await User.findOne({ _id: context.user.data._id });
         },
 
         // Fetch all leaderboard entries, sorted by score in descending order

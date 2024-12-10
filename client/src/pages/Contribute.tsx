@@ -3,7 +3,6 @@ import NewQuestionForm from "../components/newQuestionForm";
 import FeedBackForm from "../components/feedBackForm";
 import { Card } from 'antd';
 import { createStyles } from 'antd-style';
-// import { useNavigate } from "react-router-dom";
 
 const useStyle = createStyles(({ prefixCls, css }) => ({
     linearGradientButton: css`
@@ -68,12 +67,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
 }));
 
 const Contribute = () => {
-    // const navigate = useNavigate();
-    // 
-    // if (!localStorage.getItem("id_token")){
-    // navigate('/');
-    // }
-
+   
     const { styles } = useStyle();
 
     return (
