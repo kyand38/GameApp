@@ -23,7 +23,7 @@ const useStyle = createStyles(({ css }) => ({
         gap: 20px;
         margin: 0;
         padding: 0;
-        opacity: 0;
+        opacity: 1;
         animation: fadeIn 1s forwards; /* Fade in effect */
     `,
     navItem: css`
@@ -114,8 +114,8 @@ const useStyle = createStyles(({ css }) => ({
     }
 }));
 const Navbar = () => {
-    const [showModal, setShowModal] = useState(false);
-    const [showLoginModal, setshowLoginModal] = useState(false);
+    // const [showModal, setShowModal] = useState(false);
+    // const [showLoginModal, setshowLoginModal] = useState(false);
     const { styles } = useStyle();
     return (
         <div className={styles.container}>
@@ -143,16 +143,16 @@ const Navbar = () => {
                 <li className={styles.navItem}>
                     <Link
                         className={styles.navLink} to="/"
-                       // onClick={() => setShowModal(true)}
+                    // onClick={() => setShowModal(true)}
                     >
                         Sign Up
                     </Link>
                 </li>
-              
-                <li  className={styles.navItem}>
+
+                <li className={styles.navItem}>
                     <Link
-                           className={styles.navLink} to="/"
-                     //   onClick={() => setshowLoginModal(true)}
+                        className={styles.navLink} to="/"
+                    //   onClick={() => setshowLoginModal(true)}
                     >
                         login
                     </Link>
