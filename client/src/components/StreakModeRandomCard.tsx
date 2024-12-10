@@ -3,7 +3,7 @@ import { Button, Divider, Card, Typography } from 'antd';
 import '../assets/styles/flames.css'; // Optional CSS for flames
 import Confetti from 'react-confetti';
 import SparkleEffect from '../components/SparkleComponent';
-// import Fireworks from '../components/Fireworks';
+import Fireworks from '../components/Fireworks';
 
 const { Text, Title } = Typography;
 
