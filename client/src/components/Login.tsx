@@ -3,6 +3,13 @@ import { useMutation } from '@apollo/client';
 import { LoginMutations } from '../apollo/mutations'; // Import ADD_USER mutation
 import Auth from '../utils/auth';
 import { createStyles } from 'antd-style';
+// import { gsap } from 'gsap';
+// import { AntDesignOutlined } from '@ant-design/icons';
+// import { useNavigate } from 'react-router-dom';
+
+
+
+// import type { FormProps } from 'antd';
 import { Button, Checkbox, Form, Input } from 'antd';
 //import type { FormProps } from 'antd';
 // import { gsap } from 'gsap';
@@ -16,7 +23,10 @@ type FieldType = {
   remember?: string;
 };
 
+/******************************************************* */
+
 const Login = ({ }: { handleForm: () => void }) => {
+ // const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [LoginMutation] = useMutation(LoginMutations);
@@ -209,28 +219,9 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
 
 }
 export default Login;
-      {/* <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
-
-      </form> */}
 
 
-// interface SignInFormValues {
-//     username: string;
-//     password: string;
-// }
+
 
 // const useStyle = createStyles(({ prefixCls, css }) => ({
 //     linearGradientButton: css`
