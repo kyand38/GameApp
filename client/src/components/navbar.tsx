@@ -6,7 +6,7 @@ import SignupForm from './Signup';
 import Auth from '../utils/auth';
 
 import { createStyles } from 'antd-style';
-import { Divider } from 'antd';
+// import { Divider } from 'antd';g
 const useStyle = createStyles(({ css }) => ({
     container: css`
         position: relative;
@@ -145,16 +145,16 @@ const AppNavbar = () => {
                 <li className={styles.navItem}>
                     <Link
                         className={styles.navLink} to="/"
-                       // onClick={() => setShowModal(true)}
+                    // onClick={() => setShowModal(true)}
                     >
                         Sign Up
                     </Link>
                 </li>
-              
-                <li  className={styles.navItem}>
+
+                <li className={styles.navItem}>
                     <Link
-                           className={styles.navLink} to="/"
-                     //   onClick={() => setshowLoginModal(true)}
+                        className={styles.navLink} to="/"
+                    //   onClick={() => setshowLoginModal(true)}
                     >
                         login
                     </Link>
