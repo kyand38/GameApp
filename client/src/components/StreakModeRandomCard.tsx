@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { Button, Divider, Card, Typography } from 'antd';
+import { Button, Divider, Card, Typography, message } from 'antd';
 import '../assets/styles/flames.css'; // Optional CSS for flames
 import Confetti from 'react-confetti';
 import SparkleEffect from '../components/SparkleComponent';
 import Fireworks from '../components/Fireworks';
+import { useMutation } from '@apollo/client';
+import { ADD_LEADERBOARD_ENTRY } from '../apollo/mutations';
+import AuthService from '../utils/auth'; // Import your AuthService
 
 const { Text, Title } = Typography;
 
@@ -22,44 +25,80 @@ const StreakModeCard = () => {
     const [showExplanation, setShowExplanation] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
-    const [buttonLabel, setButtonLabel] = useState("First Question");
+    const [buttonLabel, setButtonLabel] = useState('First Question');
     const [showRedOverlay, setShowRedOverlay] = useState(false);
-    const [showStreakOnly, setShowStreakOnly] = useState(false); // New state for exclusive streak display
+    const [showStreakOnly, _setShowStreakOnly] = useState(false); // New state for exclusive streak display
+    const [addLeaderboardEntry] = useMutation(ADD_LEADERBOARD_ENTRY);
 
     const getRandomQuestion = async () => {
         try {
             const response = await fetch('/api/quiz/random-question', { method: 'GET' });
-
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
             const result = await response.json();
             setTrivia(result);
             setShowExplanation(false);
             setSelectedAnswer(null);
             setShowConfetti(false);
-
-            setButtonLabel("Next Question");
+            setButtonLabel('Next Question');
         } catch (error) {
             console.error('Error fetching question:', error);
+        }
+    };
+
+    const handleGameOver = async () => {
+        const user = AuthService.getProfile(); // Retrieve user profile
+        const username = user?.data?.username || 'Anonymous'; // Fallback to 'Anonymous' if no username
+    
+        try {
+            await addLeaderboardEntry({
+                variables: {
+                    username, // Pass the username
+                    score: streak,
+                },
+            });
+            message.success('Score added to the leaderboard!');
+        } catch (err) {
+            console.error('Error adding leaderboard entry:', err);
+            message.error('Failed to update leaderboard.');
         }
     };
 
     const handleAnswerClick = (answer: string) => {
         setSelectedAnswer(answer);
         setShowExplanation(true);
-
-        if (answer === trivia?.correct) {
-            setStreak((prev) => prev + 1);
-            setShowStreakOnly(true); // Show streak only
-            setTimeout(() => setShowStreakOnly(false), 4000); // Hide streak-only view after 4 seconds
-            setShowConfetti(true);
-            setTimeout(() => setShowConfetti(false), 3000);
+        const user = AuthService.getProfile(); // Decode the user's profile from the token
+        console.log('Decoded User:', user); // Log the decoded user to verify the structure
+        if (answer !== trivia?.correct) {
+            setShowRedOverlay(true);
+            setTimeout(() => setShowRedOverlay(false), 2500);
+            setGameOver(true);
+        
+            // Add to leaderboard when the game ends
+            handleGameOver();
         } else {
             setShowRedOverlay(true);
             setTimeout(() => setShowRedOverlay(false), 2500);
             setGameOver(true);
+
+            // Submit the final streak to the leaderboard
+            const user = AuthService.getProfile(); // Retrieve user profile
+            
+
+            addLeaderboardEntry({
+                variables: {
+                    username: user?.username || 'Anonymous', // Fallback to 'Anonymous' if username is missing
+                    score: streak,
+                },
+            })
+            .then(() => {
+                message.success('Score added to the leaderboard!');
+            })
+            .catch((err) => {
+                console.error('Error adding leaderboard entry:', err);
+                message.error('Failed to update leaderboard.');
+            });
         }
     };
 
@@ -67,7 +106,7 @@ const StreakModeCard = () => {
         setStreak(0);
         setGameOver(false);
         setTrivia(null);
-        setButtonLabel("First Question");
+        setButtonLabel('First Question');
     };
 
     if (showStreakOnly && streak > 0) {
@@ -84,38 +123,39 @@ const StreakModeCard = () => {
                 <h1
                     style={{
                         fontFamily: "'Orbitron', sans-serif",
-                            marginBottom: '20px',
-                            zIndex: 2,
-                            fontSize: '9rem',
-                            fontWeight: 'bold',
-                            background: 'linear-gradient(45deg, #ff007f, #ff00ff, #7f00ff, #00b8ff, #00ff00)',
-                            backgroundSize: '300% 300%',
-                            WebkitBackgroundClip: 'text',
-                            backgroundClip: 'text',
-                            color: 'transparent',
-                            textAlign: 'center',
-                            position: 'absolute',
-                            transformOrigin: 'center',
-                            animation: 'spinY 4s linear infinite', // Apply animation
+                        marginBottom: '20px',
+                        zIndex: 2,
+                        fontSize: '9rem',
+                        fontWeight: 'bold',
+                        background:
+                            'linear-gradient(45deg, #FF007F, #FF00FF, #7F00FF, #00B8FF, #00FF00)',
+                        backgroundSize: '300% 300%',
+                        WebkitBackgroundClip: 'text',
+                        backgroundClip: 'text',
+                        color: 'transparent',
+                        textAlign: 'center',
+                        position: 'absolute',
+                        transformOrigin: 'center',
+                        animation: 'spinY 4s linear infinite', // Apply animation
                     }}
                 >
                     {streak} in a row!
-                    <Fireworks />
                 </h1>
+                <Fireworks /> {/* Fireworks displayed between questions */}
                 <style>
                     {`
-                    @keyframes spinY {
-                        0% {
-                            transform: rotateY(0deg);
-                        }
-                        50% {
-                            transform: rotateY(180deg);
-                        }
-                        100% {
-                            transform: rotateY(360deg);
-                        }
-                    }
-                    `}
+            @keyframes spinY {
+              0% {
+                transform: rotateY(0deg);
+              }
+              50% {
+                transform: rotateY(180deg);
+              }
+              100% {
+                transform: rotateY(360deg);
+              }
+            }
+          `}
                 </style>
             </div>
         );
@@ -148,32 +188,33 @@ const StreakModeCard = () => {
                 ></div>
             )}
             {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
-
             <Card
                 style={{
                     width: 500,
                     borderRadius: '12px',
                     border: '2px solid',
-                    borderImage: 'linear-gradient(90deg, rgb(255,110,199)  0%, rgb(98,83,225) 63%, rgb(4,190,254)  93%) 1',
-                    backgroundColor: '#2a2a2a',
+                    borderImage:
+                        'linear-gradient(90deg, rgb(255,110,199)  0%, rgb(98,83,225) 63%, rgb(4,190,254)  93%) 1',
+                    backgroundColor: '#2A2A2A',
                     padding: '20px',
                     textAlign: 'center',
                 }}
             >
                 {gameOver ? (
                     <div>
-                        <Title level={3} style={{ color: '#ffffff' }}>
+                        <Title level={3} style={{ color: '#FFFFFF' }}>
                             Game Over
                         </Title>
-                        <Title level={4} style={{ color: '#ffffff', marginBottom: '20px' }}>
+                        <Title level={4} style={{ color: '#FFFFFF', marginBottom: '20px' }}>
                             Your Streak: {streak}
                         </Title>
                         <Button
                             onClick={resetGame}
                             style={{
                                 marginTop: '20px',
-                                background: 'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)',
-                                color: '#ffffff',
+                                background:
+                                    'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)',
+                                color: '#FFFFFF',
                                 border: '1px solid #555555',
                             }}
                         >
@@ -184,10 +225,10 @@ const StreakModeCard = () => {
                     <div>
                         {trivia ? (
                             <>
-                                <Title level={4} style={{ color: '#ffffff' }}>
+                                <Title level={4} style={{ color: '#FFFFFF' }}>
                                     Category: {trivia.category}
                                 </Title>
-                                <Text style={{ color: '#ffffff' }}>{trivia.question}</Text>
+                                <Text style={{ color: '#FFFFFF' }}>{trivia.question}</Text>
                                 <Divider />
                                 <div style={{ marginTop: '10px' }}>
                                     {trivia.answers.map((answer, index) => (
@@ -198,7 +239,7 @@ const StreakModeCard = () => {
                                                 display: 'block',
                                                 margin: '10px auto',
                                                 backgroundColor: '#333333',
-                                                color: '#ffffff',
+                                                color: '#FFFFFF',
                                                 border: '1px solid #555555',
                                                 width: '80%',
                                             }}
@@ -210,7 +251,7 @@ const StreakModeCard = () => {
                                 </div>
                                 {showExplanation && (
                                     <div style={{ marginTop: '15px' }}>
-                                        <Text style={{ color: '#ffffff' }}>
+                                        <Text style={{ color: '#FFFFFF' }}>
                                             {selectedAnswer === trivia.correct
                                                 ? 'Correct! '
                                                 : `Wrong! The correct answer was: `}
@@ -219,17 +260,19 @@ const StreakModeCard = () => {
                                             </span>
                                         </Text>
                                         <br />
-                                        <Text style={{ color: '#ffffff' }}>Explanation: {trivia?.explanation}</Text>
+                                        <Text style={{ color: '#FFFFFF' }}>
+                                            Explanation: {trivia?.explanation}
+                                        </Text>
                                     </div>
                                 )}
                             </>
                         ) : (
                             <div>
-                                <Text style={{ color: '#ffffff', fontSize: '1.2rem' }}>
+                                <Text style={{ color: '#FFFFFF', fontSize: '1.2rem' }}>
                                     Click the button to start!
                                 </Text>
                                 <br />
-                                <Text style={{ color: '#ffffff', fontSize: '1.2rem' }}>
+                                <Text style={{ color: '#FFFFFF', fontSize: '1.2rem' }}>
                                     Answer the question correctly to increase your streak!
                                 </Text>
                             </div>
@@ -238,8 +281,9 @@ const StreakModeCard = () => {
                         <Button
                             onClick={getRandomQuestion}
                             style={{
-                                background: 'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)',
-                                color: '#ffffff',
+                                background:
+                                    'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)',
+                                color: '#FFFFFF',
                                 border: '1px solid #555555',
                                 marginTop: '20px',
                             }}
@@ -247,7 +291,7 @@ const StreakModeCard = () => {
                             {buttonLabel}
                         </Button>
                         <Divider />
-                        <Text style={{ color: '#ffffff' }}>Current Streak: {streak}</Text>
+                        <Text style={{ color: '#FFFFFF' }}>Current Streak: {streak}</Text>
                     </div>
                 )}
             </Card>
