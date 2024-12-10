@@ -122,9 +122,9 @@ const Home = () => {
     const handleGame2Click = () => {
         navigate('/game2');
     };
-    const handleScoresClick = () => {
-        navigate('/home');
-    };
+    // const handleScoresClick = () => {
+    //     navigate('/home');
+    // };
     const handleStreakClick = () => {
         navigate('/game1');
     };
@@ -184,8 +184,6 @@ const Home = () => {
     return (
         <>
         <SparkleEffect />
-            <Leaderboard />
-          
             <div className={styles.container}>
                 <Fireworks />
                 <div>
@@ -211,15 +209,7 @@ const Home = () => {
                             >
                                 21 Questions (Category)
                             </Button>
-                            <Button
-                                className={`${styles.button} button`}
-                                type="primary"
-                                size="large"
-                                icon={<AntDesignOutlined />}
-                                onClick={handleScoresClick}
-                            >
-                                View High Scores
-                            </Button>
+                            <Leaderboard buttonStyle={styles.button}/>
                             <Button
                                 className={`${styles.button} button`}
                                 type="primary"
