@@ -9,11 +9,11 @@ Triva Titans allows a user to test their triva knowledge in one of our three mod
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Location-Based Aurora Visibility Forecasts](#location-based-aurora-visibility-forecasts)
-- [Interactive Aurora Viewing Map](#interactive-aurora-viewing-map)
-- [Personal Aurora Log](#personal-aurora-log)
+- [Github Link](#github-link)
+- [screenshot](#screenshot)
+- [3 Game Modes](#3-game-modes)
 - [User Authentication and Data Security](#user-authentication-and-data-security)
-- [Contributing](#contributing)
+- [Contributing](#contributing-and-Credits)
 - [License](#license)
 - [Tests](#tests)
 - [Questions?](#questions)
@@ -38,59 +38,49 @@ Frontend
 Backend
 - GraphQl and MongoDB for apis and DB managment.
 - JWT (JSON Web Tokens): For secure user authentication.
+- Apollo server
 APIs
 - Quizmania API: provides the questions, answers, and explanation.
 
+## Installation
+
+- git clone the repository
+- npm/yarn i in the root directoty
+
+
 ## Usage
-Visit the site [here]().
+To use run
+- npm/yarn run build in the root directoty
+- npm/yarn run start:dev in the root directoty to launch in developer mode
+
+# Github Link
+
+https://github.com/kyand38/Trivia-Titans.git
+
+##  screenshot
+
+<p align="center">
+  <img src="./assets/Start.png" alt="login" width="600"/>
+</p>
+
+<p align="center">
+  <img src="./assets/Logged.png" alt="Book Save" width="600"/>
+</p>
 
 ## 3 Game modes
 
 As a user, I want to play a trivia game.
 
 21 questions standard
-- The user is taken to the game page.
-- 
-- 
-- 
-- 
-- The Google Mapping API converts the address into latitude and longitude coordinates for precise location-based data.
+- When the user is taken to the game page they see a button to gereate their first question.
+- After answering a question the score is edited acording to if they got the question right.
+- The game ends when 21 questions have been answered.
 
-Real-Time Aurora Visibility Forecast
-- The app calls the Auroras.live DIY API with the user’s geocode to retrieve visibility predictions specific to their location.
-- Visibility data, including aurora intensity and probability of visibility, is displayed prominently, so users can quickly assess if viewing conditions are favorable.
+Streak mode
+- The same rules as 21 question except the game ends when the user gets a question wrong.
 
-Recommendation Output
-- The app clearly states whether aurora visibility is “Good,” “Fair,” or “Poor” based on the retrieved data.
-- Users are shown the estimated time windows for peak aurora visibility to help with planning.
-
-## Interactive Aurora Viewing Map
-As a user, I want to see a map of recommended viewing locations nearby, so I can find optimal spots for viewing auroras.
-
-Location-Based Map Generation
-- Once the user’s location is established, a Google Maps-powered interface displays nearby locations (e.g., parks, open spaces) suitable for aurora viewing.
-- The map pinpoints the user’s current location alongside other recommended areas within a 50-mile radius, highlighting nearby parks, elevated areas, and regions with low light pollution.
-
-Filters for Viewing Preferences
-- Users can apply map filters to customize their search based on viewing conditions, such as light pollution level, elevation, or proximity.
-- Clicking on a map pin provides details on each location’s suitability for aurora viewing, including distance from the user, accessibility, and ideal times based on aurora visibility data.
-
-Mobile and Desktop Responsiveness
-- The map is responsive, allowing users to interact easily on mobile and desktop devices, with zoom capabilities and seamless map navigation.
-
-## Personal Aurora Log
-As a user, I want to keep a record of my aurora sightings, so I can remember past experiences and note favorable conditions.
-
-Adding a New Sighting Entry
-- Users can add a new aurora sighting, entering details such as date, time, and location. Optional fields allow users to add notes and upload a photo.
-- Each log entry is saved to the user’s profile, accessible only after user authentication with JWT.
-
-Viewing and Editing the Aurora Log
-- Users can view all recorded sightings on a dedicated “Aurora Log” page, with sorting options by date or location.
-- Users can edit or delete past entries to update details or remove duplicates.
-
-Notification for New Sightings
-- The app sends an optional notification (e.g., a prompt) when new visibility data is favorable, encouraging users to check the forecast and log their next sighting if conditions are good.
+21 questions by catagory
+- the same rules as 21 questions standard but the user must interact with a modal to select a category for their trivia.
 
 ## User Authentication and Data Security
 As a user, I want my personal information and highscore to be secure, so I can feel confident my data is protected.
@@ -104,22 +94,31 @@ Secure Environment Variable Management
 Data Privacy Assurance
 - User data is protected per best practices in data security, including the encryption of passwords and restriction of access to personal logs to authenticated sessions only.
 
-## Contributing
+## Contributing and Credits
 [Trinigch](https://github.com/Trinigch)
 
 [MrBalld](https://github.com/MrBalld)
 
-[jthor0516](https://github.com/jthor0516)
+[kyand38](https://github.com/kyand38)
 
-Contributions are welcome! Feel free to open issues or submit pull requests to improve this project.
+[JoshAskew](https://github,com/JoshAskew)
+
+Contributions are welcome! Feel free to open issues or submit pull requests to improve this project Feedback can also be given on the contribute page.
 
 ## License
 This project is licensed under the MIT License.  
-For more details, visit the [MIT License page](https://opensource.org/licenses/MIT).
+Copyright (c) 2024 Kyle Anderson and partners
 
-## Tests
-This section will include details of the tests we plan to implement in future iterations of this project.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Questions?
-Find me on GitHub: [EthanForrestCarr](https://github.com/EthanForrestCarr)  
-For any additional questions: ethan@ethancarr.com
+ If you have any questions, feel free to contact us:
+
+- GitHub: Trinigch
+- GitHub: JoshAskew
+- GitHub: MrBalld
+- GitHub: kyand38
