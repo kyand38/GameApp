@@ -22,7 +22,6 @@ const QuizCard = () => {
     const [showExplanation, setShowExplanation] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [showConfetti, setShowConfetti] = useState(false);
-    //const [showFlames, setShowFlames] = useState(false);
     const [showQuestionNumber, setShowQuestionNumber] = useState(false);
     const [questionLoading, setQuestionLoading] = useState(false);
     const [animateHeading, setAnimateHeading] = useState(false);
