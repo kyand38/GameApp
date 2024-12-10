@@ -1,19 +1,38 @@
 // use this to decode a token and get the user's information out of it
 import { jwtDecode } from 'jwt-decode';
 
+
+// create an interface for the payload of the token
+interface JwtPayload {
+  username: string;
+  email: string;
+  id: string;
+  data: string;
+}
+
+// create an interface for the token
 interface UserToken {
   name: string;
   exp: number;
+  data: JwtPayload;
 }
 
 // create a new class to instantiate for a user
 class AuthService {
   // get user data
+
   getProfile() {
-   // return jwtDecode(this.getToken() || '');
-   const token = this.getToken();
- //  console.log('Decoded Profile:', jwtDecode(token || ''));
-   return jwtDecode(token || '');
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      console.log('User profile:', decoded);
+      return decoded; // Now it has 'username', 'email', and 'id'
+    } catch (error) {
+      console.error('Invalid token:', error);
+      return null;
+    }
   }
 
   // check if user's logged in
@@ -30,8 +49,8 @@ class AuthService {
       const decoded = jwtDecode<UserToken>(token);
       if (decoded.exp < Date.now() / 1000) {
         return true;
-      } 
-      
+      }
+
       return false;
     } catch (err) {
       return false;
@@ -41,9 +60,9 @@ class AuthService {
   getToken() {
     // Retrieves the user token from localStorage
     const token = localStorage.getItem('id_token');
-//    console.log('Retrieved token:', token);
+    //    console.log('Retrieved token:', token);
     return token;
- //   return localStorage.getItem('id_token');
+    //   return localStorage.getItem('id_token');
   }
 
   login(idToken: string) {

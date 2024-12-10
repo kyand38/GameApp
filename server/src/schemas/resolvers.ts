@@ -96,7 +96,7 @@ const resolvers = {
         // Add a new entry to the leaderboard
         addLeaderboardEntry: async (
             _: unknown,
-            { score, category }: { score: number; category: string | null },
+            { score, category, username }: { score: number; category: string | null, username: string },
             context: any // Assuming context contains the user info
         ) => {
             try {
@@ -105,7 +105,7 @@ const resolvers = {
                     throw new Error('Not authenticated. Please log in.');
                 }
         
-                const username = context.user.username; // Get the authenticated user's username
+
                 const newEntry = new LeaderboardEntryModel({
                     username, // Include the authenticated user's username
                     score,
