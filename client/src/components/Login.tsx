@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-//import {  Button } from 'react-bootstrap';
 import { LoginMutations } from '../apollo/mutations'; // Import ADD_USER mutation
-//import { Form, Input, Button, message, ConfigProvider } from 'antd';
-import { createStyles } from 'antd-style';
-import { gsap } from 'gsap';
-import { AntDesignOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
-
-
-import type { FormProps } from 'antd';
+import { createStyles } from 'antd-style';
 import { Button, Checkbox, Form, Input } from 'antd';
+//import type { FormProps } from 'antd';
+// import { gsap } from 'gsap';
+// import { AntDesignOutlined } from '@ant-design/icons';
+// import { useNavigate } from 'react-router-dom';
+//import { Form, Input, Button, message, ConfigProvider } from 'antd';
 
 type FieldType = {
   username?: string;
@@ -19,23 +16,16 @@ type FieldType = {
   remember?: string;
 };
 
-/******************************************************* */
-
-const Login = ({ handleForm }: { handleForm: () => void }) => {
- // const navigate = useNavigate();
+const Login = ({ }: { handleForm: () => void }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [LoginMutation] = useMutation(LoginMutations);/*CONSULTAR*/
-
-
+  const [LoginMutation] = useMutation(LoginMutations);
   const handleSubmit = async () => {
-    //e.preventDefault();
     try {
       const { data } = await LoginMutation({ variables: { email, password } });
-      if (data?.login?.token && data?.login?.user ) {// Verifica si el usuario existe
+      if (data?.login?.token && data?.login?.user ) {
        // localStorage.setItem('id_token', data.login.token);
         Auth.login(data.login.token);
-
       } else {
         console.error('Invalid credentials or user does not exist');
       }
@@ -45,14 +35,13 @@ const Login = ({ handleForm }: { handleForm: () => void }) => {
   };
 
 const useStyle = createStyles(({ prefixCls, css }) => ({
+  
       linearGradientButton: css`
           &.${prefixCls}-btn-primary:not([disabled]):not(.${prefixCls}-btn-dangerous) {
-              border-width: 0;
-  
+              border-width: 0;  
               > span {
                   position: relative;
               }
-  
               &::before {
                   content: '';
                   background: linear-gradient(135deg, #6253e1, #04befe);
@@ -68,12 +57,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
               }
           }
       `,
-        // display: flex;
-          // justify-content: center;
-          // align-items: center;
-         // Text: #000000E0
       container: css`
-        
          color: #000000;
           height: 50vh;
           background-color: black;
@@ -157,56 +141,22 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
       `,
   }));
  
-   const { styles } = useStyle();
-  //  useEffect(() => {
-  //   //         // GSAP animation for form appearance
-  //   //         gsap.from('.formWrapper', { opacity: 0, y: -50, duration: 1, ease: 'easeOut' });
-  //   //         gsap.from('.input', { opacity: 0, y: 20, stagger: 0.2, duration: 1, ease: 'easeOut' });
-  //   //         gsap.from('.submitButton', { opacity: 0, y: 20, duration: 1, ease: 'easeOut', delay: 0.5 });
-  //   //     }, []);
-    
-  //   //     const onFinish = (values: SignInFormValues) => {
-  //   //         console.log('Success:', values);
-  //   //         message.success('Login Successful!');
-  //   //     };
-    
-  //   //     const onFinishFailed = (errorInfo: any) => {
-  //   //         console.log('Failed:', errorInfo);
-  //   //         message.error('Please check your credentials');
-  //   //     };
-    
-  //   //     const [showModal, setShowModal] = useState(false);
-  //   //     const [showLoginModal, setshowLoginModal] = useState(false); 
+  const { styles } = useStyle();
+ 
   return (
     <div  
     className={styles.container}
     >
-      {/* <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
 
-      </form> */}
       <Form 
-              layout={"vertical"} 
-           onFinish={handleSubmit}
+            layout={"vertical"} 
+            onFinish={handleSubmit}
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             style={{ maxWidth: 600 }}
             initialValues={{ remember: true }}
-          /*  onFinish={onFinish}*/
-            autoComplete="off"
+         //   autoComplete="off"
           >
             <Form.Item<FieldType>
                 className={styles.formTitle}
@@ -259,13 +209,28 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
 
 }
 export default Login;
+      {/* <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Login</button>
+
+      </form> */}
 
 
-
-interface SignInFormValues {
-    username: string;
-    password: string;
-}
+// interface SignInFormValues {
+//     username: string;
+//     password: string;
+// }
 
 // const useStyle = createStyles(({ prefixCls, css }) => ({
 //     linearGradientButton: css`
