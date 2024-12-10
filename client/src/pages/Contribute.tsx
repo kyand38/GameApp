@@ -80,7 +80,6 @@ const Contribute = () => {
         <>
             <div className={styles.container}>
                 <h1 className={`${styles.heading} heading`}>Contribute</h1>
-
                 <div>
                     <Card title="Suggest A New Question">
                         <NewQuestionForm />
