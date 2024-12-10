@@ -34,13 +34,3 @@ mutation AddLeaderboardEntry($username: String!, $score: Int!) {
     category
   }
 }`
-
-// query GetLeaderboard {
-//   getLeaderboard {
-//     id
-//     username
-//     score
-//     category
-//     createdAt
-//   }
-// }

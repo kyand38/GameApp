@@ -32,7 +32,7 @@ try {
         },
 
         // Fetch all leaderboard entries, sorted by score in descending order
-        getLeaderboard: async (_: unknown, { limit = 10 }: { limit: number }, _context: any) => {
+        getLeaderboard: async (_: unknown, { limit = 20 }: { limit: number }, _context: any) => {
             try {
               return await LeaderboardEntryModel.find()
                 .sort({ score: -1 })

@@ -4,13 +4,13 @@ import { useMutation } from '@apollo/client';
 import { LoginMutations } from '../apollo/mutations'; // Import ADD_USER mutation
 //import { Form, Input, Button, message, ConfigProvider } from 'antd';
 import { createStyles } from 'antd-style';
-import { gsap } from 'gsap';
-import { AntDesignOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+// import { gsap } from 'gsap';
+// import { AntDesignOutlined } from '@ant-design/icons';
+// import { useNavigate } from 'react-router-dom';
 import Auth from '../utils/auth';
 
 
-import type { FormProps } from 'antd';
+// import type { FormProps } from 'antd';
 import { Button, Checkbox, Form, Input } from 'antd';
 
 type FieldType = {
@@ -21,7 +21,7 @@ type FieldType = {
 
 /******************************************************* */
 
-const Login = ({ handleForm }: { handleForm: () => void }) => {
+const Login = ({ }: { handleForm: () => void }) => {
  // const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -262,10 +262,10 @@ export default Login;
 
 
 
-interface SignInFormValues {
-    username: string;
-    password: string;
-}
+// interface SignInFormValues {
+//     username: string;
+//     password: string;
+// }
 
 // const useStyle = createStyles(({ prefixCls, css }) => ({
 //     linearGradientButton: css`
