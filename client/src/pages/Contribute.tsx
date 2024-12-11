@@ -28,6 +28,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
       }
     }
   `,
+
     container: css`
     position: relative;
     display: flex;
@@ -40,6 +41,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
     overflow: hidden;
     margin: 0;
   `,
+
     heading: css`
     font-family: 'Orbitron', sans-serif;
     margin-bottom: 20px;
@@ -53,6 +55,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
     background-clip: text;
     color: white;
   `,
+  
     button: css`
     display: inline-block;
     margin: 10px;
