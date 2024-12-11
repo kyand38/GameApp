@@ -26,7 +26,8 @@ const Leaderboard: React.FC<Props> = ({ buttonStyle }: any) => {
     }, [data])
 
     return (
-        <div>
+        <>
+        
             {/* Button to toggle the drawer */}
             <Button
                 type="primary"
@@ -95,8 +96,8 @@ const Leaderboard: React.FC<Props> = ({ buttonStyle }: any) => {
                     <Text>No leaderboard entries found.</Text>
                 )}
             </Drawer>
-        </div >
-    );
+       </>
+    )
 };
 
 export default Leaderboard;

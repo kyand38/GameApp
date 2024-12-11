@@ -1,5 +1,5 @@
 import { AntDesignOutlined } from '@ant-design/icons';
-import { Button, ConfigProvider, Space } from 'antd';
+import { Button, ConfigProvider } from 'antd';
 import { createStyles } from 'antd-style';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -31,7 +31,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
         }
     `,
     container: css`
-        position: relative;
+        
         display: flex;
         justify-content: center;
         align-items: center;
@@ -39,15 +39,23 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
         text-align: center;
         background-color: black;
         color: white;
-        overflow: ;
+        overflow: hidden;
         margin: 0;
+        flex-direction: column;
+        padding: 20px;
+
+         @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
     `,
     heading: css`
         font-family: 'Orbitron', sans-serif;
         margin-bottom: 20px;
         opacity: 0;
         z-index: 2;
-        font-size: 3rem;
+        font-size: 2.5rem;
         font-weight: bold;
         background: linear-gradient(45deg, #ff007f, #ff00ff, #7f00ff, #00b8ff, #00ff00);
         background-size: 300% 300%;
@@ -76,29 +84,54 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
                 transform: translateY(-20px);
             }
         }
+
+        @media (max-width: 768px) {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-wrap: wrap; 
+            }
     `,
     button: css`
-        display: inline-block;
         margin: 10px;
         opacity: 0;
         transition: all 0.3s ease-in-out;
         z-index: 2;
         position: relative;
 
-        &:hover {
-            background: black;
+        @media (max-width: 768px) {
+            width: 100%; 
+            font-size: 1rem;
         }
     `,
     image: css`
-        margin-top: -100px;
-        max-width: 400px;
+        margin-top: -50px;
+        max-width: 350px;
         height: auto;
-        margin-bottom: 50px;
+        margin-bottom: 30px;
         z-index: 2;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        
 
+        @media (max-width: 768px) {
+            max-width: 200px;
+            margin-top: -200px;
+        }
     `,
+
+    buttonContainer: css`
+        display: flex;
+
+        @media (max-width: 768px) {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+    `,
+
+    flex: css`
+        display: flex;
+    `,
+
     '@keyframes spin': {
         '0%': {
             transform: 'rotate(0deg)',
@@ -109,6 +142,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
     },
 
 }));
+
 
 
 // Home Component
@@ -122,9 +156,7 @@ const Home = () => {
     const handleGame2Click = () => {
         navigate('/game2');
     };
-    // const handleScoresClick = () => {
-    //     navigate('/home');
-    // };
+   
     const handleStreakClick = () => {
         navigate('/game1');
     };
@@ -153,7 +185,7 @@ const Home = () => {
                             duration: 4, // Adjust for slower or faster rotation
                             ease: 'linear', // Smooth rotation
                             repeat: -1, // Infinite rotation
-                            repeatDelay: 2, // No delay before repeating
+                            repeatDelay: 2,
                         });
                     },
                 });
@@ -186,11 +218,11 @@ const Home = () => {
         <SparkleEffect />
             <div className={styles.container}>
                 <Fireworks />
-                <div>
+                <div className='flex'>
                     <img src={Logo} alt="Trivia Titan" className={`${styles.image} image`} />
                     <h1 className={`${styles.heading} heading`}>Trivia Titan: Are You Ready to Party?</h1>
                     <ConfigProvider button={{ className: styles.linearGradientButton }}>
-                        <Space>
+                        <div className={styles.buttonContainer}>
                             <Button
                                 className={`${styles.button} button `}
                                 type="primary"
@@ -209,7 +241,7 @@ const Home = () => {
                             >
                                 21 Questions (Category)
                             </Button>
-                            <Leaderboard buttonStyle={styles.button}/>
+                            <Leaderboard buttonStyle={`${styles.button} button`}/>
                             <Button
                                 className={`${styles.button} button`}
                                 type="primary"
@@ -219,7 +251,7 @@ const Home = () => {
                             >
                                 Streak Mode
                             </Button>
-                        </Space>
+                        </div>
                     </ConfigProvider>
                 </div>
             </div>

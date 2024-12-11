@@ -51,7 +51,7 @@ const useProfileCardStyles = createStyles(({ css }) => ({
         transition: all 0.3s ease-in-out;
         position: relative;
         background: linear-gradient(135deg, #f04dff,#25c4f5);
-        border: 2px solid #f04dff;
+        border: 1px solid #fff;
 `
 }));
 
