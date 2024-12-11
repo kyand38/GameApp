@@ -22,26 +22,42 @@ const resolvers = {
     Query: {
         me: async (_parent: unknown, _args: UserArgs, context: any) => {
             console.log('Here is context', context.user)
-try {
-            const user = await User.findOne({ _id: context.user.data._id });
-            return user;    
-} catch (error) {
-    console.error(error)
-    return error
-}
+            try {
+                const user = await User.findOne({ _id: context.user.data._id });
+                return user;
+            } catch (error) {
+                console.error(error)
+                return error
+            }
         },
 
         // Fetch all leaderboard entries, sorted by score in descending order
+        // getLeaderboard: async (_: unknown, { limit = 20 }: { limit: number }, _context: any) => {
+        //     try {
+        //         return await LeaderboardEntryModel.find()
+        //             .sort({ score: -1 })
+        //             .limit(limit); // Limit results for performance
+        //     } catch (error) {
+        //         console.error('Error fetching leaderboard:', error);
+        //         throw new Error('Failed to fetch leaderboard');
+        //     }
+        // },
+
         getLeaderboard: async (_: unknown, { limit = 20 }: { limit: number }, _context: any) => {
             try {
-              return await LeaderboardEntryModel.find()
-                .sort({ score: -1 })
-                .limit(limit); // Limit results for performance
+                const leaderboard = await LeaderboardEntryModel.find()
+                    .sort({ score: -1 })
+                    .limit(limit); // Limit results for performance
+
+                return leaderboard.map(entry => ({
+                    ...entry.toObject(),
+                    createdAt: new Date(entry.createdAt).toISOString(), // Ensure proper formatting
+                }));
             } catch (error) {
-              console.error('Error fetching leaderboard:', error);
-              throw new Error('Failed to fetch leaderboard');
+                console.error('Error fetching leaderboard:', error);
+                throw new Error('Failed to fetch leaderboard');
             }
-          },
+        },
 
         // Fetch leaderboard entries filtered by category
         getLeaderboardByCategory: async (_: unknown, { category }: { category: string }, _context: any) => {
@@ -109,15 +125,15 @@ try {
                 if (!context.user) {
                     throw new Error('Not authenticated. Please log in.');
                 }
-        
+
 
                 const newEntry = new LeaderboardEntryModel({
                     username, // Include the authenticated user's username
                     score,
                     category,
-                    createdAt: new Date(),
+                    createdAt: new Date().toISOString(),
                 });
-        
+                console.log('newEntry', newEntry)
                 return await newEntry.save();
             } catch (error) {
                 console.error('Error adding leaderboard entry:', error);

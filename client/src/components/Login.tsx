@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { LoginMutations } from '../apollo/mutations';
 import Auth from '../utils/auth';
-import { Button, Checkbox, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography } from 'antd';
 
 type FieldType = {
   username?: string;
@@ -52,13 +52,18 @@ const { Title } = Typography;
           boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
         }}
       >
-        <Title level={3} style={{ color: '#6253e1', textAlign: 'center', marginBottom: '20px' }}>
+        <Title level={3} style={{ 
+          color: '#8678fa', 
+          textAlign: 'center', 
+          marginBottom: '20px',
+          marginTop: '-110px',
+          fontFamily: 'Orbitron, Sans Serif' }}>
           Login
         </Title>
 
         <Form.Item<FieldType >
       
-          label="Email"
+      label={<span style={{ color: '#fff' }}>Email</span>}
           
           rules={[
             { required: true, message: 'Please input your email!' },
@@ -81,7 +86,7 @@ const { Title } = Typography;
         </Form.Item>
 
         <Form.Item<FieldType>
-          label="Password"
+          label={<span style={{ color: '#fff' }}>Password</span>}
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
@@ -98,18 +103,16 @@ const { Title } = Typography;
           />
         </Form.Item>
 
-        <Form.Item<FieldType> name="remember" valuePropName="checked">
-          <Checkbox style={{ color: '#fff' }}>Remember me</Checkbox>
-        </Form.Item>
+       
 
         <Form.Item>
           <Button
             type="primary"
             htmlType="submit"
             style={{
-              width: '100%',
+              width: '50%',
               backgroundColor: '#6253e1',
-              color: '#000',
+              color: '#fff',
               border: 'none',
               borderRadius: '5px',
             }}

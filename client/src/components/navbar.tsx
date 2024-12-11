@@ -202,68 +202,71 @@ const AppNavbar = () => {
     onHide={() => setShowModal(false)}
     aria-labelledby="signup-modal"
     style={{
-        backgroundColor: 'rgba(0, 0, 0, 0.8)', // Dim background overlay
-        color: '#fff', // White text for modal
-        borderRadius: '10px',
-        border: 'none', // Remove border
-        maxWidth: '600px', // Center the modal
-        margin: '0 auto', // Align center horizontally
-        padding: '20px',
-        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.6)', // Add shadow for depth
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        border: 'none', 
+        maxWidth: '400px', 
     }}
 >
     <Tab.Container defaultActiveKey="login">
-        <Modal.Header
-            closeButton
-            style={{
-                borderBottom: '1px solid #444', // Styled border at the bottom
-                background: 'linear-gradient(135deg, #6253E1, #04BEFE)', // Gradient background
-                color: '#fff', // White text
-            }}
-        >
-            <Modal.Title id="signup-modal">
-                <Nav variant="pills" style={{ justifyContent: 'center', gap: '10px' }}>
-                    <Nav.Item>
-                        <Nav.Link
-                            eventKey="login"
-                            style={{
-                                background: 'linear-gradient(135deg, #ff007f, #7f00ff)',
-                                borderRadius: '5px',
-                                padding: '10px 20px',
-                                color: '#fff',
-                                fontWeight: 'bold',
-                                transition: 'background 0.3s ease',
-                                fontFamily: 'Orbitron, sans-serif',
-                            }}
-                        >
-                            Login
-                        </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link
-                            eventKey="signup"
-                            style={{
-                                background: 'linear-gradient(135deg, #04BEFE, #00ff00)',
-                                borderRadius: '5px',
-                                padding: '10px 20px',
-                                color: '#fff',
-                                fontWeight: 'bold',
-                                transition: 'background 0.3s ease',
-                                fontFamily: 'Orbitron, sans-serif',
-                            }}
-                        >
-                            Sign Up
-                        </Nav.Link>
-                    </Nav.Item>
-                </Nav>
-            </Modal.Title>
-        </Modal.Header>
+    <Modal.Header
+    closeButton
+    style={{
+        borderBottom: '1px solid black',
+        background: 'black',
+        color: '#fff',
+    }}
+>
+    <button
+        type="button"
+        className="btn-close"
+        aria-label="Close"
+        style={{
+            color: '#fff',
+            opacity: 1,
+        }}
+        onClick={() => setShowModal(false)}
+    ></button>
+    <Modal.Title id="signup-modal">
+        <Nav variant="pills" style={{ justifyContent: 'center', gap: '10px' }}>
+            <Nav.Item>
+                <Nav.Link
+                    eventKey="login"
+                    style={{
+                        background: 'linear-gradient(135deg, #ff007f, #7f00ff)',
+                        borderRadius: '5px',
+                        padding: '10px 20px',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        transition: 'background 0.3s ease',
+                        fontFamily: 'Orbitron, sans-serif',
+                    }}
+                >
+                    Login
+                </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link
+                    eventKey="signup"
+                    style={{
+                        background: 'linear-gradient(135deg, #04BEFE, #00ff00)',
+                        borderRadius: '5px',
+                        padding: '10px 20px',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                        transition: 'background 0.3s ease',
+                        fontFamily: 'Orbitron, sans-serif',
+                    }}
+                >
+                    Sign Up
+                </Nav.Link>
+            </Nav.Item>
+        </Nav>
+    </Modal.Title>
+</Modal.Header>
+
         <Modal.Body
             style={{
                 backgroundColor: '#1e1e2f', // Dark body background
-                color: '#fff', // White text
-                padding: '20px', // Add some padding
-                borderRadius: '10px',
             }}
         >
             <Tab.Content>
