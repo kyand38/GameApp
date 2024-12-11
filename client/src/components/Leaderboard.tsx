@@ -6,7 +6,6 @@ import { GET_LEADERBOARD } from '../apollo/queries';
 const { Text } = Typography;
 
 
-
 interface Props {
     buttonStyle: string;
 }
@@ -14,7 +13,7 @@ interface Props {
 const Leaderboard: React.FC<Props> = ({ buttonStyle }: any) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [leaderboardData, setLeaderboardData] = useState<any>(null);
-    const [getLeaderboard, { loading, error, data }] = useLazyQuery(GET_LEADERBOARD);
+    const [getLeaderboard, { loading, error, data }] = useLazyQuery(GET_LEADERBOARD, {fetchPolicy: 'no-cache'});
 
     const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
@@ -34,15 +33,7 @@ const Leaderboard: React.FC<Props> = ({ buttonStyle }: any) => {
                 onClick={toggleDrawer}
                 className={`${buttonStyle} button ant-btn-lg`}
                 icon={<AntDesignOutlined />}
-            //         style={{
-            //             background: 'linear-gradient(90deg, rgb(4,190,254) 0%, rgb(98,83,225) 63%, rgb(255,110,199) 93%)',
-            //             border: 'none',
-            //             display: 'inline - block',
-            //             margin: '10px',
-            //             opacity: 0,
-            //             transition: 'all 0.3s ease-in -out',
-            //             position: 'relative',  
-            // }}
+           
             >
                 View Leaderboard
             </Button>

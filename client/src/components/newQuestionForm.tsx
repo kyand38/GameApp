@@ -33,6 +33,7 @@ const NewQuestionForm: React.FC = () => (
         onFinishFailed={onFinishFailed}
         autoComplete="off"
     >
+        <SparkleEffect />
         <Form.Item<FieldType>
             label="Qusetion"
             name="question"
