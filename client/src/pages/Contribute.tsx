@@ -3,28 +3,18 @@ import { Form, Input, Button, message } from 'antd';
 import { createStyles } from 'antd-style';
 import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
 import SparkleEffect from '../components/SparkleComponent';
+import { AntDesignOutlined } from '@ant-design/icons';
 
-const useStyle = createStyles(({ prefixCls, css }) => ({
+const useStyle = createStyles(({ css }) => ({
     linearGradientButton: css`
-        &.${prefixCls}-btn-primary:not([disabled]):not(.${prefixCls}-btn-dangerous) {
-            border-width: 0;
-            > span {
-                position: relative;
-            }
-            &::before {
-                content: '';
-                background: linear-gradient(135deg, #6253e1, #04befe);
-                position: absolute;
-                inset: 0;
-                opacity: 1;
-                transition: all 0.3s;
-                border-radius: inherit;
-            }
-            &:hover::before {
-                opacity: 0;
-            }
-        }
-    `,
+        display: inline-block;
+        margin: 10px;
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+        background: linear-gradient(135deg, #f04dff,#25c4f5);
+        border: 1px solid #fff;
+`,
     container: css`
         position: relative;
         display: flex;
@@ -132,6 +122,7 @@ const Contribute: React.FC = () => {
                             type="primary"
                             htmlType="submit"
                             className={`${styles.linearGradientButton}`}
+                            icon={<AntDesignOutlined />}
                         >
                             Submit
                         </Button>
@@ -189,6 +180,7 @@ const Contribute: React.FC = () => {
                             type="primary"
                             htmlType="submit"
                             className={`${styles.linearGradientButton}`}
+                            icon={<AntDesignOutlined />}
                         >
                             Submit
                         </Button>
