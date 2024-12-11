@@ -1,9 +1,8 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../apollo/mutations';
 import Auth from '../utils/auth';
-import { Button, Form, Input, Typography} from 'antd';
+import { Button, Form, Input, Typography } from 'antd';
 
 const { Title } = Typography;
 
@@ -17,12 +16,17 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [addUserMutation] = useMutation(ADD_USER);
 
+  // Separate effect for password match validation
+  useEffect(() => {
+    setPasswordsMatch(userFormData.password === userFormData.confirmPassword);
+  }, [userFormData.password, userFormData.confirmPassword]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserFormData({ ...userFormData, [name]: value });
-    if (name === 'password' || name === 'confirmPassword') {
-      setPasswordsMatch(userFormData.password === value);
-    }
+    setUserFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleFormSubmit = async () => {
@@ -43,6 +47,7 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
       console.error(err);
     }
 
+    // Clear form data after successful submission
     setUserFormData({
       username: '',
       email: '',
@@ -58,7 +63,6 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
       alignItems: 'center',
       height: '100vh',
       backgroundColor: '#000',
-      color: '#fff',
     }}>
       <Form
         layout="vertical"
@@ -69,15 +73,14 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
           width: '400px',
         }}
       >
-        <Title level={3} style={{ 
-          color: '#8678fa', 
-          textAlign: 'center', 
+        <Title level={3} style={{
+          color: '#8678fa',
+          textAlign: 'center',
           marginBottom: '20px',
           marginTop: '-110px',
-          fontFamily: 'Orbitron, Sans Serif' }}>
-
+          fontFamily: 'Orbitron, Sans Serif'
+        }}>
           Sign Up
-
         </Title>
 
         <Form.Item
@@ -94,22 +97,21 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
         </Form.Item>
 
         <Form.Item
-  label={<span style={{ color: '#fff' }}>Email</span>}
-  name="email"
-  rules={[
-    { required: true, message: 'Email is required!' },
-    { type: 'email', message: 'Enter a valid email!' },
-  ]}
->
-  <Input
-    name="email"
-    type="email"
-    placeholder="Your email address"
-    value={userFormData.email}
-    onChange={handleInputChange}
-    style={{ color: '#fff' }}
-  />
-</Form.Item>
+          label={<span style={{ color: '#fff' }}>Email</span>}
+          name="email"
+          rules={[
+            { required: true, message: 'Email is required!' },
+            { type: 'email', message: 'Enter a valid email!' },
+          ]}
+        >
+          <Input
+            name="email"
+            type="email"
+            placeholder="Your email address"
+            value={userFormData.email}
+            onChange={handleInputChange}
+          />
+        </Form.Item>
 
         <Form.Item
           label={<span style={{ color: '#fff' }}>Password</span>}

@@ -5,6 +5,9 @@
 ## Description
 Triva Titans allows a user to test their triva knowledge in one of our three modes, 21 questions, infinite streak, 21 questions by category. The Quizmania api is used to generate questions for the user. When the user is loged in they are able to edit their profile, access the contribute page, and view the leaderboard. JWT encryption is used to protect user passwords and to authenticate users on the database.
 
+## Live Site
+[Trivia Titans](https://trivia-titans.onrender.com/)
+
 ## Table of Contents
 - [Features](#features)
 - [Installation](#installation)
@@ -57,15 +60,19 @@ To use run
 
 https://github.com/kyand38/Trivia-Titans.git
 
-##  screenshot
+##  Screenshots
 
-<p align="center">
-  <img src="./assets/Start.png" alt="login" width="600"/>
-</p>
 
-<p align="center">
-  <img src="./assets/Logged.png" alt="Save" width="600"/>
-</p>
+<img src="./client/src/images/homepage.png" />
+
+<img src="./client/src/images/loginsignup.png" />
+
+<img src="./client/src/images/profile.png" />
+
+<img src="./client/src/images/game.png" />
+
+<img src="./client/src/images/leaderboard.png" />
+
 
 ## 3 Game modes
 
