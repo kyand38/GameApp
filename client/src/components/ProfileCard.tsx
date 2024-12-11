@@ -6,6 +6,8 @@ import { createStyles } from "antd-style";
 import { gql, useQuery } from "@apollo/client";
 import { useEffect } from "react";
 import Robot from "../images/Titian.webp";
+import { AntDesignOutlined } from '@ant-design/icons';
+import SparkleEffect from "./SparkleComponent";
 
 const GET_USER = gql`
     query Me {
@@ -20,7 +22,7 @@ const GET_USER = gql`
 
 const useProfileCardStyles = createStyles(({ css }) => ({
     profileCard: css`
-        background: linear-gradient(135deg, #8969ff, #82b6ed);
+        background: linear-gradient(135deg, #f04dff,#25c4f5);
         padding: 20px;
         border-radius: 15px;
         box-shadow: 0 0 5px 2px rgba(0, 255, 255, 0.4),
@@ -43,20 +45,14 @@ const useProfileCardStyles = createStyles(({ css }) => ({
         }
     `,
     profileButton: css`
-        margin-top: 10px;
-        border-radius: 10px;
-        transition: all 0.3s ease-in-out;
         display: inline-block;
-        font-size: 16px;
-        color: #fff;
-        background: linear-gradient(135deg, #6253e1, #04befe);
-        border: none;
-        &:hover {
-            box-shadow: 0 0 10px 4px rgba(0, 255, 255, 0.5),
-                0 0 12px 5px rgba(255, 0, 255, 0.5);
-            transform: scale(1.05);
-        }
-    `,
+        margin: 10px;
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
+        position: relative;
+        background: linear-gradient(135deg, #f04dff,#25c4f5);
+        border: 2px solid #f04dff;
+`
 }));
 
 
@@ -111,6 +107,7 @@ const ProfileCard: React.FC = () => {
                 alt="User Avatar"
                 className={styles.profileImage}
             />
+            <SparkleEffect />
             <Descriptions
                 title={user.username + "'s Profile"}
                 bordered
@@ -162,9 +159,14 @@ const ProfileCard: React.FC = () => {
                     {user.highScore || "No high scores"}
                 </Descriptions.Item>
             </Descriptions>
-            <Button className={styles.profileButton} type="primary">
-                Save Changes
-            </Button>
+            <Button
+                                className={`${styles.profileButton} button`}
+                                type="primary"
+                                size="large"
+                                icon={<AntDesignOutlined />}
+                            >
+                                Save Changes
+                            </Button>
         </div>
     );
 };

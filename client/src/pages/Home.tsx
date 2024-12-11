@@ -86,7 +86,7 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
         position: relative;
 
         &:hover {
-            animation: spin 0.5s ease-in-out;
+            background: black;
         }
     `,
     image: css`
@@ -192,7 +192,7 @@ const Home = () => {
                     <ConfigProvider button={{ className: styles.linearGradientButton }}>
                         <Space>
                             <Button
-                                className={`${styles.button} button spikyButton`}
+                                className={`${styles.button} button `}
                                 type="primary"
                                 size="large"
                                 icon={<AntDesignOutlined />}
@@ -201,7 +201,7 @@ const Home = () => {
                                 21 Questions
                             </Button>
                             <Button
-                                className={`${styles.button} button spikyButton`}
+                                className={`${styles.button} button `}
                                 type="primary"
                                 size="large"
                                 icon={<AntDesignOutlined />}
