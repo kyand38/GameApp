@@ -4,15 +4,15 @@ import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import Login from './Login';
 import SignupForm from './Signup';
 import Auth from '../utils/auth';
-
+import Home from "../images/home.png"
+import "../assets/styles/flames.css"
 import { createStyles } from 'antd-style';
-import { Divider } from 'antd';
+
 const useStyle = createStyles(({ css }) => ({
     container: css`
-        position: relative;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
         height: 80px;
         background-color: black;
         color: white;
@@ -30,11 +30,14 @@ const useStyle = createStyles(({ css }) => ({
         animation: fadeIn 1s forwards; /* Fade in effect */
     `,
     navItem: css`
+        color: white;
+        font-size: 1.2rem;
         position: relative;
         transition: transform 0.3s ease, color 0.3s ease;
         &:hover {
-            transform: scale(1.1); /* Slightly scale up when hovered */
+            transform: scale(1.3); /* Slightly scale up when hovered */
             color: #04BEFE; /* Change color on hover */
+            text-decoration: underline;
         }
     `,
     navLink: css`
@@ -74,28 +77,6 @@ const useStyle = createStyles(({ css }) => ({
             background-color: #04BEFE;
         }
     `,
-    modalOverlay: css`
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    `,
-    modalContent: css`
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        width: 400px;
-        max-width: 100%;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        z-index: 10000;
-    `,
     closeButton: css`
         background: none;
         border: none;
@@ -116,150 +97,186 @@ const useStyle = createStyles(({ css }) => ({
         '100%': { opacity: 1 },
     }
 }));
+
 const AppNavbar = () => {
     const [showModal, setShowModal] = useState(false);
     const { styles } = useStyle();
     return (
         <div className={styles.container}>
-        {/*    <ul className={styles.nav}>
-                <li className={styles.navItem}>
-                    <Link className={styles.navLink} to="/" onClick={Auth.logout}>
-                        Sign out
-                    </Link>
-                </li>
-                <li className={styles.navItem}>
-                    <Link className={styles.navLink} to="/home">
-                        Home
-                    </Link>
-                </li>
-                <li className={styles.navItem}>
-                    <Link className={styles.navLink} to="/profile">
-                        Profile
-                    </Link>
-                </li>
-                <li className={styles.navItem}>
-                    <Link className={styles.navLink} to="/contribute">
-                        Contribute
-                    </Link>
-                </li>
-                <li className={styles.navItem}>
-                    <Link
-                        className={styles.navLink} to="/"
-                       // onClick={() => setShowModal(true)}
-                    >
-                        Sign Up
-                    </Link>
-                </li>
-              
-                <li  className={styles.navItem}>
-                    <Link
-                           className={styles.navLink} to="/"
-                     //   onClick={() => setshowLoginModal(true)}
-                    >
-                        login
-                    </Link>
-                </li>
-            </ul>
-        */
-        }
-            {/* {showLoginModal && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <button
-                            className="close-button"
-                            onClick={() => setshowLoginModal(false)}
-                        >
-                            &times;
-                        </button>
-                        <h2>Login</h2>
-                    
-                    </div>
-                </div>
-            )}
-            {showModal && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <button
-                            className="close-button"
-                            onClick={() => setShowModal(false)}
-                        >
-                            &times;
-                        </button>
-                        <h2>Sign Up</h2>
-                        <SignUpForm handleModalClose={() => setShowModal(false)} />
-                    </div>
-                </div>
-            )} */}
-      <div>
-        <Container fluid>
-          <Navbar.Brand as={Link} to='/'>
-          Trivia Titan
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='navbar' />
-          <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
-            <Nav className='ml-auto d-flex'>
-              <Nav.Link as={Link} to='/'>
-                See your Points!
-              </Nav.Link>
-              {/* if user is logged in show profile , contribute and logout */}
-              {Auth.loggedIn() ? (
-                <>
-                 <ul className={styles.nav}>
-                    <li className={styles.navItem}>
-                        <Nav.Link as={Link} to='/profile'>
-                        Profile
-                        </Nav.Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Nav.Link as={Link} to='/contribute'>
-                        Contribute
-                        </Nav.Link>
-                    </li>
-                    <li className={styles.navItem}>
-                        <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
-                    </li>
-                  </ul>
-                </>
-              ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </div>
 
-                {/* set modal data up */}
+            <div>
+                <Container fluid>
+                    <Navbar.Brand as={Link} to='/'>
+                        <img
+                            src={Home}
+                            alt="Home Icon"
+                            style={{ width: '50px', height: '50px' }}
+                        />
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls='navbar' />
+                    <Navbar.Collapse id='navbar' className='d-flex flex-row-reverse'>
+                        <Nav className='ml-auto d-flex'>
+                            {/* if user is logged in show profile , contribute and logout */}
+                            {Auth.loggedIn() ? (
+                                <>
+                                    <ul className={styles.nav}>
+                                        <li className={styles.navItem}>
+                                            <Nav.Link as={Link} to='/profile'
+                                                 style={{
+                                                    fontFamily: 'Orbitron, sans-serif',
+                                                    fontSize: '1.2rem',
+                                                    fontWeight: 'bold',
+                                                    background: 'linear-gradient(45deg, #ff007f, #ff00ff, #7f00ff, #00b8ff, #00ff00)',
+                                                    backgroundSize: '300% 300%',
+                                                    WebkitBackgroundClip: 'text',
+                                                    backgroundClip: 'text',
+                                                    color: 'transparent',
+                                                    animation: 'gradientAnimation 3s ease infinite',
+                                                    opacity: 1, // Set to 1 for visibility
+                                                }}
+                                            >
+                                                Profile
+                                            </Nav.Link>
+                                        </li>
+                                        <li className={styles.navItem}>
+                                            <Nav.Link as={Link} to='/contribute'
+                                                 style={{
+                                                    fontFamily: 'Orbitron, sans-serif',
+                                                    fontSize: '1.2rem',
+                                                    fontWeight: 'bold',
+                                                    background: 'linear-gradient(45deg, #ff007f, #ff00ff, #7f00ff, #00b8ff, #00ff00)',
+                                                    backgroundSize: '300% 300%',
+                                                    WebkitBackgroundClip: 'text',
+                                                    backgroundClip: 'text',
+                                                    color: 'transparent',
+                                                    animation: 'gradientAnimation 3s ease infinite',
+                                                    opacity: 1, // Set to 1 for visibility
+                                                }}
+                                            >
+                                                Contribute
+                                            </Nav.Link>
+                                        </li>
+                                        <li className={styles.navItem}>
+                                            <Nav.Link onClick={Auth.logout}
+                                                 style={{
+                                                    fontFamily: 'Orbitron, sans-serif',
+                                                    fontSize: '1.2rem',
+                                                    fontWeight: 'bold',
+                                                    background: 'linear-gradient(45deg, #ff007f, #ff00ff, #7f00ff, #00b8ff, #00ff00)',
+                                                    backgroundSize: '300% 300%',
+                                                    WebkitBackgroundClip: 'text',
+                                                    backgroundClip: 'text',
+                                                    color: 'transparent',
+                                                    animation: 'gradientAnimation 3s ease infinite',
+                                                    opacity: 1, // Set to 1 for visibility
+                                                }}
+                                            >Logout</Nav.Link>
+                                        </li>
+                                    </ul>
+                                </>
+                            ) : (
+                                <Nav.Link className={styles.navItem} onClick={() => setShowModal(true)}
+                                style={{
+                                    fontFamily: 'Orbitron, sans-serif',
+                                    fontSize: '1.2rem',
+                                    fontWeight: 'bold',
+                                    background: 'linear-gradient(45deg, #ff007f, #ff00ff, #7f00ff, #00b8ff, #00ff00)',
+                                    backgroundSize: '300% 300%',
+                                    WebkitBackgroundClip: 'text',
+                                    backgroundClip: 'text',
+                                    color: 'transparent',
+                                    animation: 'gradientAnimation 3s ease infinite',
+                                    opacity: 1, // Set to 1 for visibility
+                                }}
+                                >Login/Sign Up</Nav.Link>
+                            )}
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </div>
+
+            {/* set modal data up */}
             <Modal
-                size='lg'
-                show={showModal}
-                onHide={() => setShowModal(false)}
-                aria-labelledby='signup-modal'>
-                {/* tab container to do either signup or login component */}
-                <Tab.Container defaultActiveKey='login'>
-                <Modal.Header closeButton>
-                    <Modal.Title id='signup-modal'>
-                    <Nav variant='pills'>
-                        <Nav.Item>
-                        <Nav.Link eventKey='login'>Login</Nav.Link>
-                        </Nav.Item>
-                        <Nav.Item>
-                        <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
-                        </Nav.Item>
-                    </Nav>
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Tab.Content>
-                    <Tab.Pane eventKey='login'>
-                        <Login handleForm={() => setShowModal(false)} />
-                    </Tab.Pane>
-                    <Tab.Pane eventKey='signup'>
-                        <SignupForm handleForm={() => setShowModal(false)} />
-                    </Tab.Pane>
-                    </Tab.Content>
-                </Modal.Body>
-                </Tab.Container>
-            </Modal>
+    size="lg"
+    show={showModal}
+    onHide={() => setShowModal(false)}
+    aria-labelledby="signup-modal"
+    style={{
+        backgroundColor: 'rgba(0, 0, 0, 0.8)', // Dim background overlay
+        color: '#fff', // White text for modal
+        borderRadius: '10px',
+        border: 'none', // Remove border
+        maxWidth: '600px', // Center the modal
+        margin: '0 auto', // Align center horizontally
+        padding: '20px',
+        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.6)', // Add shadow for depth
+    }}
+>
+    <Tab.Container defaultActiveKey="login">
+        <Modal.Header
+            closeButton
+            style={{
+                borderBottom: '1px solid #444', // Styled border at the bottom
+                background: 'linear-gradient(135deg, #6253E1, #04BEFE)', // Gradient background
+                color: '#fff', // White text
+            }}
+        >
+            <Modal.Title id="signup-modal">
+                <Nav variant="pills" style={{ justifyContent: 'center', gap: '10px' }}>
+                    <Nav.Item>
+                        <Nav.Link
+                            eventKey="login"
+                            style={{
+                                background: 'linear-gradient(135deg, #ff007f, #7f00ff)',
+                                borderRadius: '5px',
+                                padding: '10px 20px',
+                                color: '#fff',
+                                fontWeight: 'bold',
+                                transition: 'background 0.3s ease',
+                                fontFamily: 'Orbitron, sans-serif',
+                            }}
+                        >
+                            Login
+                        </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link
+                            eventKey="signup"
+                            style={{
+                                background: 'linear-gradient(135deg, #04BEFE, #00ff00)',
+                                borderRadius: '5px',
+                                padding: '10px 20px',
+                                color: '#fff',
+                                fontWeight: 'bold',
+                                transition: 'background 0.3s ease',
+                                fontFamily: 'Orbitron, sans-serif',
+                            }}
+                        >
+                            Sign Up
+                        </Nav.Link>
+                    </Nav.Item>
+                </Nav>
+            </Modal.Title>
+        </Modal.Header>
+        <Modal.Body
+            style={{
+                backgroundColor: '#1e1e2f', // Dark body background
+                color: '#fff', // White text
+                padding: '20px', // Add some padding
+                borderRadius: '10px',
+            }}
+        >
+            <Tab.Content>
+                <Tab.Pane eventKey="login">
+                    <Login handleForm={() => setShowModal(false)} />
+                </Tab.Pane>
+                <Tab.Pane eventKey="signup">
+                    <SignupForm handleForm={() => setShowModal(false)} />
+                </Tab.Pane>
+            </Tab.Content>
+        </Modal.Body>
+    </Tab.Container>
+</Modal>
         </div>
     );
 };

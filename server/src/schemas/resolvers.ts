@@ -22,12 +22,17 @@ const resolvers = {
     Query: {
         me: async (_parent: unknown, _args: UserArgs, context: any) => {
             console.log('Here is context', context.user)
-
-            return await User.findOne({ _id: context.user._id });
+try {
+            const user = await User.findOne({ _id: context.user.data._id });
+            return user;    
+} catch (error) {
+    console.error(error)
+    return error
+}
         },
 
         // Fetch all leaderboard entries, sorted by score in descending order
-        getLeaderboard: async (_: unknown, { limit = 10 }: { limit: number }, _context: any) => {
+        getLeaderboard: async (_: unknown, { limit = 20 }: { limit: number }, _context: any) => {
             try {
               return await LeaderboardEntryModel.find()
                 .sort({ score: -1 })
@@ -96,7 +101,7 @@ const resolvers = {
         // Add a new entry to the leaderboard
         addLeaderboardEntry: async (
             _: unknown,
-            { score, category }: { score: number; category: string | null },
+            { score, category, username }: { score: number; category: string | null, username: string },
             context: any // Assuming context contains the user info
         ) => {
             try {
@@ -105,7 +110,7 @@ const resolvers = {
                     throw new Error('Not authenticated. Please log in.');
                 }
         
-                const username = context.user.username; // Get the authenticated user's username
+
                 const newEntry = new LeaderboardEntryModel({
                     username, // Include the authenticated user's username
                     score,

@@ -20,25 +20,25 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <h1 className='display-2'>Wrong page!</h1>,
     children: [
-       {
-         index: true,
-         element: < Home/>
-       }, 
+      {
+        index: true,
+        element: < Home />
+      },
       {
         path: '/home',
-        element: < Home/>
+        element: < Home />
       },
       {
         path: '/game',
-        element : < Game/>
+        element: < Game />
       },
       {
         path: '/game1',
-        element : < Game1/>
+        element: < Game1 />
       },
       {
         path: '/game2',
-        element : < Game2/>
+        element: < Game2 />
       },
       // {
       //   path: '/game3',
@@ -46,21 +46,21 @@ const router = createBrowserRouter([
       // },
       {
         path: '/profile',
-        element: < Profile/>
+        element: < Profile />
       },
       {
         path: '/contribute',
-        element: < Contribute/>
+        element: < Contribute />
       },
       {
         path: '/streakModeRandom',
-        element: < Contribute/>
+        element: < Contribute />
       },
       // {
       //   path: '/categorySelector',
       //   element: <CategorySelector/>
       // }
-      
+
     ]
   }
 ])

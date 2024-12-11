@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button, Divider, Card, Typography, Modal } from 'antd';
 import Confetti from 'react-confetti';
 import SparkleEffect from './SparkleComponent';
@@ -28,6 +28,7 @@ const CategoryQuizCard = () => {
     const [isGameOver, setIsGameOver] = useState(false);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1); // Track current question index
     const [isQuestionVisible, setIsQuestionVisible] = useState(false); // New state for visibility of the h1
+    const [showRedOverlay, setShowRedOverlay] = useState(false);
 
     const MAX_QUESTIONS = 21;
 
@@ -109,6 +110,10 @@ const CategoryQuizCard = () => {
             setShowConfetti(true);
             setTimeout(() => setShowConfetti(false), 3000);
         }
+        else {
+            setShowRedOverlay(true);
+            setTimeout(() => setShowRedOverlay(false), 1000);
+        };
     };
 
     const handleCategorySelect = (selectedCategory: string) => {
@@ -138,6 +143,21 @@ const CategoryQuizCard = () => {
             }}
         >
             <SparkleEffect />
+            {showRedOverlay && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                        zIndex: 1000,
+                        pointerEvents: 'none',
+                        animation: 'flash 0.5s ease-in-out',
+                    }}
+                ></div>
+            )}
             {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
     
             {isGameOver ? (
