@@ -16,12 +16,10 @@ export const GET_ME = gql`
 export const GET_LEADERBOARD = gql`
   query GetLeaderboard {
     getLeaderboard {
-      id
-      username
-      score
-      category
-      createdAt
-    }
+    username
+    score
+    createdAt
+  }
   }
 `;
 

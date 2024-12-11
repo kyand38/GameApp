@@ -13,7 +13,7 @@ interface Props {
 const Leaderboard: React.FC<Props> = ({ buttonStyle }: any) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [leaderboardData, setLeaderboardData] = useState<any>(null);
-    const [getLeaderboard, { loading, error, data }] = useLazyQuery(GET_LEADERBOARD, {fetchPolicy: 'no-cache'});
+    const [getLeaderboard, { loading, error, data }] = useLazyQuery(GET_LEADERBOARD, { fetchPolicy: 'no-cache' });
 
     const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
 
@@ -24,7 +24,7 @@ const Leaderboard: React.FC<Props> = ({ buttonStyle }: any) => {
     useEffect(() => {
         data && setLeaderboardData(data.getLeaderboard)
     }, [data])
-    
+
     return (
         <div>
             {/* Button to toggle the drawer */}
@@ -33,7 +33,7 @@ const Leaderboard: React.FC<Props> = ({ buttonStyle }: any) => {
                 onClick={toggleDrawer}
                 className={`${buttonStyle} button ant-btn-lg`}
                 icon={<AntDesignOutlined />}
-           
+
             >
                 View Leaderboard
             </Button>
