@@ -85,7 +85,7 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
 
         <Form.Item
           label={<span style={{ color: '#fff' }}>Username</span>}
-          name="username"
+          
           rules={[{ required: true, message: 'Username is required!' }]}
         >
           <Input
@@ -98,7 +98,7 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
 
         <Form.Item
           label={<span style={{ color: '#fff' }}>Email</span>}
-          name="email"
+          
           rules={[
             { required: true, message: 'Email is required!' },
             { type: 'email', message: 'Enter a valid email!' },
@@ -115,7 +115,7 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
 
         <Form.Item
           label={<span style={{ color: '#fff' }}>Password</span>}
-          name="password"
+          
           rules={[{ required: true, message: 'Password is required!' }]}
         >
           <Input.Password
@@ -128,7 +128,7 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
 
         <Form.Item
           label={<span style={{ color: '#fff' }}>Confirm Password</span>}
-          name="confirmPassword"
+          
           rules={[{ required: true, message: 'Confirm Password is required!' }]}
         >
           <Input.Password
@@ -137,7 +137,7 @@ const SignupForm = ({ }: { handleForm: () => void }) => {
             value={userFormData.confirmPassword}
             onChange={handleInputChange}
           />
-          {!passwordsMatch && (
+          {userFormData && !passwordsMatch && (
             <div style={{ color: 'red', marginTop: '5px' }}>Passwords do not match!</div>
           )}
         </Form.Item>
